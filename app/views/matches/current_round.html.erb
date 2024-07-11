@@ -1,0 +1,15 @@
+<h1>Current Round Matches</h1>
+
+<% if @matches.present? %>
+  <ul>
+    <% @matches.each do |match| %>
+      <li>
+        <strong><%= match.dig("teams", "home", "name") %> vs <%= match.dig("teams", "away", "name") %></strong><br>
+        Date: <%= match.dig("fixture", "date") %><br>
+        Venue: <%= match.dig("fixture", "venue", "name") %>, <%= match.dig("fixture", "venue", "city") %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No matches found for the current round.</p>
+<% end %>

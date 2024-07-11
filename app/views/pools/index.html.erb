@@ -1,0 +1,18 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Pools</h1>
+
+<div id="pools">
+  <% @pools.each do |pool| %>
+    <%= render pool %>
+    <p>
+      <%= link_to "Show this pool", pool %>
+    </p>
+  <% end %>
+</div>
+
+<% if user_signed_in? %>
+  <% if current_user.admin? %>
+    <%= link_to "New pool", new_pool_path %>
+  <% end %>
+<% end %>

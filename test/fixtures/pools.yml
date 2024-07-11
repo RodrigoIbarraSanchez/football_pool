@@ -1,0 +1,33 @@
+# == Schema Information
+#
+# Table name: pools
+#
+#  id            :integer          not null, primary key
+#  title         :string
+#  description   :string
+#  raffle_winner :string
+#  isStarted     :boolean
+#  isFinished    :boolean
+#  prize         :string
+#  user_id       :integer          not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
+one:
+  title: MyString
+  description: MyString
+  raffle_winner: MyString
+  isStarted: false
+  isFinished: false
+  prize: MyString
+  user: one
+
+two:
+  title: MyString
+  description: MyString
+  raffle_winner: MyString
+  isStarted: false
+  isFinished: false
+  prize: MyString
+  user: two
