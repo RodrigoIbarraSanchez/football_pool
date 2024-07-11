@@ -14,8 +14,10 @@
 #  updated_at    :datetime         not null
 #
 class Pool < ApplicationRecord
-  belongs_to :user
+  has_and_belongs_to_many :users
   has_and_belongs_to_many :matches
+  has_many :predictions
+  belongs_to :user
 
   validates :title, presence: { message: "- El título es obligatorio" }
 end

@@ -14,6 +14,32 @@
   <p>No matches available.</p>
 <% end %>
 
+<% unless @user_is_creator %>
+  <% unless @user_is_participant %>
+    <%= button_to "Join this pool", join_pool_path(@pool), method: :post %>
+  <% else %>
+    <h3>Your Predictions</h3>
+    <%= form_with url: predictions_path, local: true do |form| %>
+      <% @pool.matches.each do |match| %>
+        <div>
+          <p><%= "#{match.home_team} vs #{match.away_team}" %></p>
+          <%= form.hidden_field :match_id, value: match.id %>
+          <%= form.hidden_field :pool_id, value: @pool.id %>
+          <div>
+            <%= form.label :home_team_score, "Home Team Score" %>
+            <%= form.number_field :home_team_score %>
+          </div>
+          <div>
+            <%= form.label :away_team_score, "Away Team Score" %>
+            <%= form.number_field :away_team_score %>
+          </div>
+        </div>
+      <% end %>
+      <%= form.submit "Submit Predictions" %>
+    <% end %>
+  <% end %>
+<% end %>
+
 <div>
   <%= link_to "Edit this pool", edit_pool_path(@pool) %> |
   <%= link_to "Back to pools", pools_path %>

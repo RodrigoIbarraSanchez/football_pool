@@ -17,7 +17,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :pools, dependent: :destroy
+  has_many :predictions
+  has_and_belongs_to_many :pools
+  has_many :created_pools, class_name: 'Pool', foreign_key: 'user_id'
 
   enum role: { regular: 'regular', admin: 'admin' }
 

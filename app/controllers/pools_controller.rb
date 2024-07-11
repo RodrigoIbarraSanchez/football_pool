@@ -1,5 +1,5 @@
 class PoolsController < ApplicationController
-  before_action :set_pool, only: %i[show edit update destroy]
+  before_action :set_pool, only: %i[show edit update destroy join]
   before_action :authenticate_user!, except: %i[show index]
   before_action :authorize_pool_creation, only: %i[new create]
 
@@ -9,6 +9,8 @@ class PoolsController < ApplicationController
 
   def show
     @matches = @pool.matches
+    @user_is_creator = current_user == @pool.user
+    @user_is_participant = @pool.users.include?(current_user)
   end
 
   def new
@@ -68,6 +70,11 @@ class PoolsController < ApplicationController
       format.html { redirect_to pools_url, notice: "Pool was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def join
+    @pool.users << current_user unless @pool.users.include?(current_user)
+    redirect_to @pool, notice: "You have successfully joined the pool."
   end
 
   private
