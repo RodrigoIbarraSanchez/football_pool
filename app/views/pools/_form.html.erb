@@ -1,28 +1,22 @@
-<!-- _form.html.erb -->
-<%= form_with(model: pool, local: true) do |form| %>
-  <% if pool.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(pool.errors.count, "error") %> prohibited this pool from being saved:</h2>
+<%= form_with(url: predictions_path, local: true) do |form| %>
+  <% @pool.matches.each do |match| %>
+    <%= hidden_field_tag "prediction[pool_id][]", @pool.id %>
+    <%= hidden_field_tag "prediction[match_id][]", match.id %>
 
-      <ul>
-        <% pool.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+    <div>
+      <label>Match: <%= "#{match.home_team} vs #{match.away_team}" %></label>
+    </div>
+
+    <div>
+      <label>Home Team Score</label>
+      <%= number_field_tag "prediction[home_team_score][]" %>
+    </div>
+
+    <div>
+      <label>Away Team Score</label>
+      <%= number_field_tag "prediction[away_team_score][]" %>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= form.submit "Submit Predictions" %>
 <% end %>

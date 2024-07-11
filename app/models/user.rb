@@ -18,7 +18,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :predictions
-  has_and_belongs_to_many :pools
+  has_and_belongs_to_many :pools, join_table: :pools_users
   has_many :created_pools, class_name: 'Pool', foreign_key: 'user_id'
 
   enum role: { regular: 'regular', admin: 'admin' }

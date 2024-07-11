@@ -19,29 +19,55 @@
     <%= button_to "Join this pool", join_pool_path(@pool), method: :post %>
   <% else %>
     <h3>Your Predictions</h3>
-    <%= form_with url: predictions_path, local: true do |form| %>
+    <ul>
       <% @pool.matches.each do |match| %>
-        <div>
+        <% prediction = current_user.predictions.find_by(pool: @pool, match: match) %>
+        <li>
           <p><%= "#{match.home_team} vs #{match.away_team}" %></p>
-          <%= form.hidden_field :match_id, value: match.id %>
-          <%= form.hidden_field :pool_id, value: @pool.id %>
-          <div>
-            <%= form.label :home_team_score, "Home Team Score" %>
-            <%= form.number_field :home_team_score %>
-          </div>
-          <div>
-            <%= form.label :away_team_score, "Away Team Score" %>
-            <%= form.number_field :away_team_score %>
-          </div>
-        </div>
+          <% if prediction %>
+            <p>Home Team Score: <%= prediction.home_team_score %></p>
+            <p>Away Team Score: <%= prediction.away_team_score %></p>
+          <% else %>
+            <p>No prediction submitted</p>
+          <% end %>
+        </li>
       <% end %>
-      <%= form.submit "Submit Predictions" %>
+    </ul>
+
+    <% if @pool.matches.any? { |match| current_user.predictions.find_by(pool: @pool, match: match).nil? } %>
+      <h3>Submit New Predictions</h3>
+      <%= form_with url: predictions_path, local: true do |form| %>
+        <% @pool.matches.each do |match| %>
+          <% unless current_user.predictions.find_by(pool: @pool, match: match) %>
+            <div>
+              <p><%= "#{match.home_team} vs #{match.away_team}" %></p>
+              <%= hidden_field_tag "prediction[match_id][]", match.id %>
+              <%= hidden_field_tag "prediction[pool_id][]", @pool.id %>
+              <div>
+                <%= label_tag "prediction[home_team_score][]", "Home Team Score" %>
+                <%= number_field_tag "prediction[home_team_score][]", nil %>
+              </div>
+              <div>
+                <%= label_tag "prediction[away_team_score][]", "Away Team Score" %>
+                <%= number_field_tag "prediction[away_team_score][]", nil %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+        <%= form.submit "Submit Predictions" %>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>
 
-<div>
-  <%= link_to "Edit this pool", edit_pool_path(@pool) %> |
-  <%= link_to "Back to pools", pools_path %>
-  <%= button_to "Destroy this pool", @pool, method: :delete %>
-</div>
+<% if @user_is_creator %>
+  <div>
+    <%= link_to "Edit this pool", edit_pool_path(@pool) %> |
+    <%= link_to "Back to pools", pools_path %>
+    <%= button_to "Destroy this pool", @pool, method: :delete %>
+  </div>
+<% else %>
+  <div>
+    <%= link_to "Back to pools", pools_path %>
+  </div>
+<% end %>
