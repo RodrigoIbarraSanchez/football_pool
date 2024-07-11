@@ -1,9 +1,11 @@
-<%= form_with(model: @pool, local: true) do |form| %>
-  <% if @pool.errors.any? %>
+<!-- _form.html.erb -->
+<%= form_with(model: pool, local: true) do |form| %>
+  <% if pool.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@pool.errors.count, "error") %> prohibited this pool from being saved:</h2>
+      <h2><%= pluralize(pool.errors.count, "error") %> prohibited this pool from being saved:</h2>
+
       <ul>
-        <% @pool.errors.full_messages.each do |message| %>
+        <% pool.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -11,8 +13,8 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
   </div>
 
   <div class="field">
@@ -20,12 +22,7 @@
     <%= form.text_area :description %>
   </div>
 
-  <div class="field">
-    <%= form.label :matches %><br>
-    <%= form.collection_check_boxes(:match_ids, @matches, :id, :display_name) %>
-  </div>
-
   <div class="actions">
-    <%= form.submit "Create Pool" %>
+    <%= form.submit %>
   </div>
 <% end %>

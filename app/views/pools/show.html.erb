@@ -1,10 +1,21 @@
+<!-- app/views/pools/show.html.erb -->
 <p style="color: green"><%= notice %></p>
 
 <%= render @pool %>
 
+<h2>Matches</h2>
+<% if @pool.matches.any? %>
+  <ul>
+    <% @pool.matches.each do |match| %>
+      <li><%= "#{match.home_team} vs #{match.away_team} at #{match.venue} on #{match.date.strftime('%d/%m/%Y %H:%M')}" %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No matches available.</p>
+<% end %>
+
 <div>
   <%= link_to "Edit this pool", edit_pool_path(@pool) %> |
   <%= link_to "Back to pools", pools_path %>
-
   <%= button_to "Destroy this pool", @pool, method: :delete %>
 </div>

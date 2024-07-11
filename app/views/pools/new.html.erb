@@ -1,8 +1,33 @@
+<!-- app/views/pools/new.html.erb -->
 <h1>New pool</h1>
 
-<%= render "form", pool: @pool %>
+<%= form_with(model: @pool, local: true) do |form| %>
+  <div>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
 
-<br>
+  <div>
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <h2>Matches</h2>
+  <% if @matches.present? %>
+    <ul>
+      <% @matches.each do |match| %>
+        <li>
+          <%= check_box_tag "pool[match_ids][]", match.id %>
+          <%= "#{match.home_team} vs #{match.away_team} at #{match.venue} on #{match.date}" %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No matches available.</p>
+  <% end %>
+
+  <%= form.submit "Create Pool" %>
+<% end %>
 
 <div>
   <%= link_to "Back to pools", pools_path %>

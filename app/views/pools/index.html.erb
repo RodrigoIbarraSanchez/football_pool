@@ -4,10 +4,7 @@
 
 <div id="pools">
   <% @pools.each do |pool| %>
-    <%= render pool %>
-    <p>
-      <%= link_to "Show this pool", pool %>
-    </p>
+    <%= render partial: "pool", locals: { pool: pool } %>
   <% end %>
 </div>
 

@@ -12,6 +12,8 @@
 
 ActiveRecord::Schema[7.1].define(version: 2024_07_11_035359) do
   create_table "matches", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "home_team"
     t.string "away_team"
     t.datetime "date"
@@ -19,14 +21,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_11_035359) do
     t.string "city"
     t.string "round"
     t.integer "league_id"
-    t.integer "fixture_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer "fixture_id", null: false
+    t.index ["fixture_id"], name: "index_matches_on_fixture_id", unique: true
   end
-  
+
   create_table "matches_pools", id: false, force: :cascade do |t|
-    t.bigint "match_id", null: false
-    t.bigint "pool_id", null: false
+    t.integer "pool_id", null: false
+    t.integer "match_id", null: false
+    t.index ["match_id", "pool_id"], name: "index_matches_pools_on_match_id_and_pool_id"
+    t.index ["pool_id", "match_id"], name: "index_matches_pools_on_pool_id_and_match_id"
   end
 
   create_table "pools", force: :cascade do |t|
