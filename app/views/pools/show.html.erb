@@ -1,73 +1,25 @@
-<!-- app/views/pools/show.html.erb -->
-<p style="color: green"><%= notice %></p>
+<% props = {
+  pool: {
+    id: @pool.id,
+    title: @pool.title,
+    description: @pool.description,
+    raffle_winner: @pool.raffle_winner,
+    isStarted: @pool.isStarted,
+    isFinished: @pool.isFinished,
+    prize: @pool.prize,
+    user_id: @pool.user_id,
+    created_at: @pool.created_at,
+    updated_at: @pool.updated_at,
+    matches: @matches.map { |match| { id: match.id, home_team: match.home_team, away_team: match.away_team, date: match.date, venue: match.venue } }
+  },
+  notice: flash[:notice],
+  userIsCreator: @user_is_creator,
+  userIsParticipant: @user_is_participant,
+  currentUser: {
+    id: current_user.id,
+    predictions: current_user.predictions.where(pool: @pool).map { |prediction| { match_id: prediction.match_id, home_team_score: prediction.home_team_score, away_team_score: prediction.away_team_score } }
+  }
+}.to_json %>
 
-<%= render @pool %>
-
-<h2>Matches</h2>
-<% if @pool.matches.any? %>
-  <ul>
-    <% @pool.matches.each do |match| %>
-      <li><%= "#{match.home_team} vs #{match.away_team} at #{match.venue} on #{match.date.strftime('%d/%m/%Y %H:%M')}" %></li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>No matches available.</p>
-<% end %>
-
-<% unless @user_is_creator %>
-  <% unless @user_is_participant %>
-    <%= button_to "Join this pool", join_pool_path(@pool), method: :post %>
-  <% else %>
-    <h3>Your Predictions</h3>
-    <ul>
-      <% @pool.matches.each do |match| %>
-        <% prediction = current_user.predictions.find_by(pool: @pool, match: match) %>
-        <li>
-          <p><%= "#{match.home_team} vs #{match.away_team}" %></p>
-          <% if prediction %>
-            <p>Home Team Score: <%= prediction.home_team_score %></p>
-            <p>Away Team Score: <%= prediction.away_team_score %></p>
-          <% else %>
-            <p>No prediction submitted</p>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
-
-    <% if @pool.matches.any? { |match| current_user.predictions.find_by(pool: @pool, match: match).nil? } %>
-      <h3>Submit New Predictions</h3>
-      <%= form_with url: predictions_path, local: true do |form| %>
-        <% @pool.matches.each do |match| %>
-          <% unless current_user.predictions.find_by(pool: @pool, match: match) %>
-            <div>
-              <p><%= "#{match.home_team} vs #{match.away_team}" %></p>
-              <%= hidden_field_tag "prediction[match_id][]", match.id %>
-              <%= hidden_field_tag "prediction[pool_id][]", @pool.id %>
-              <div>
-                <%= label_tag "prediction[home_team_score][]", "Home Team Score" %>
-                <%= number_field_tag "prediction[home_team_score][]", nil %>
-              </div>
-              <div>
-                <%= label_tag "prediction[away_team_score][]", "Away Team Score" %>
-                <%= number_field_tag "prediction[away_team_score][]", nil %>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-        <%= form.submit "Submit Predictions" %>
-      <% end %>
-    <% end %>
-  <% end %>
-<% end %>
-
-<% if @user_is_creator %>
-  <div>
-    <%= link_to "Edit this pool", edit_pool_path(@pool) %> |
-    <%= link_to "Back to pools", pools_path %>
-    <%= button_to "Destroy this pool", @pool, method: :delete %>
-  </div>
-<% else %>
-  <div>
-    <%= link_to "Back to pools", pools_path %>
-  </div>
-<% end %>
+<div id="react-root" data-props="<%= props %>"></div>
+<%= javascript_pack_tag 'application' %>

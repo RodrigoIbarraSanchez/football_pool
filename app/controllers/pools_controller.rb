@@ -5,12 +5,34 @@ class PoolsController < ApplicationController
 
   def index
     @pools = Pool.all
+    @current_user = current_user
+    Rails.logger.debug "Pools: #{@pools.inspect}"
   end
 
   def show
     @matches = @pool.matches
     @user_is_creator = current_user == @pool.user
     @user_is_participant = @pool.users.include?(current_user)
+
+    props = {
+      pool: {
+        id: @pool.id,
+        title: @pool.title,
+        description: @pool.description,
+        raffle_winner: @pool.raffle_winner,
+        isStarted: @pool.isStarted,
+        isFinished: @pool.isFinished,
+        prize: @pool.prize,
+        user_id: @pool.user_id,
+        created_at: @pool.created_at,
+        updated_at: @pool.updated_at,
+        matches: @matches.map { |match| { id: match.id, home_team: match.home_team, away_team: match.away_team, date: match.date } }
+      },
+      userIsCreator: @user_is_creator,
+      userIsParticipant: @user_is_participant
+    }.to_json
+
+    @props = props
   end
 
   def new

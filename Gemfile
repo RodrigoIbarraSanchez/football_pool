@@ -71,3 +71,4 @@ gem 'pundit'
 gem 'httparty'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'byebug', group: [:development, :test]
+gem "webpacker", "~> 5.4"
