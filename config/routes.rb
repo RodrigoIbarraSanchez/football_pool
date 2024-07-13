@@ -2,10 +2,16 @@ Rails.application.routes.draw do
   devise_for :users
   resources :pools do
     member do
-      post 'join'
+      match 'join', via: [:get, :post]
     end
+  resources :pools do
+    member do
+      get 'leaderboard'
+    end
+  end    
   end
-  resources :predictions, only: [:create]
+
+  resources :predictions, only: [:create, :update]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

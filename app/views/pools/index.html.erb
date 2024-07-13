@@ -2,7 +2,8 @@
   pools: @pools.map { |pool| { id: pool.id, title: pool.title, description: pool.description, user_id: pool.user_id, prize: pool.prize, created_at: pool.created_at, updated_at: pool.updated_at } },
   notice: notice,
   userSignedIn: user_signed_in?,
-  currentUser: current_user ? { id: current_user.id, admin: current_user.admin? } : nil
+  currentUser: current_user ? { id: current_user.id, admin: current_user.admin? } : nil,
+  csrfToken: form_authenticity_token
 }.to_json %>
 
 <div id="react-root" data-props="<%= props %>"></div>

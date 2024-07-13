@@ -135,7 +135,7 @@ class PoolsController < ApplicationController
 
   def join
     @pool.users << current_user unless @pool.users.include?(current_user)
-    redirect_to @pool, notice: "You have successfully joined the pool."
+    redirect_to @pool, notice: "¡Listo! Ahora eres parte de la quiniela."
   end
 
   private

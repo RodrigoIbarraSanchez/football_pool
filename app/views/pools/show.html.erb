@@ -29,8 +29,17 @@
   userIsParticipant: @user_is_participant,
   currentUser: {
     id: current_user.id,
-    predictions: current_user.predictions.where(pool: @pool).map { |prediction| { match_id: prediction.match_id, home_team_score: prediction.home_team_score, away_team_score: prediction.away_team_score } }
-  }
+    predictions: current_user.predictions.where(pool: @pool).map { |prediction| { 
+      id: prediction.id,
+      match_id: prediction.match_id, 
+      home_team_score: prediction.home_team_score, 
+      away_team_score: prediction.away_team_score,
+      points: prediction.points,
+      home_team_logo: prediction.match.home_team_logo,
+      away_team_logo: prediction.match.away_team_logo,
+    } }
+  },
+  csrfToken: form_authenticity_token
 }.to_json %>
 
 <div id="react-root" data-props="<%= props %>"></div>

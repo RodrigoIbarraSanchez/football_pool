@@ -45,11 +45,11 @@ class ApiFootballService
           home_team_score: fixture_data["goals"]["home"],
           away_team_score: fixture_data["goals"]["away"],
           status: fixture_data["fixture"]["status"]["short"],
-          elapsed: fixture_data["fixture"]["status"]["elapsed"],
-          home_team_logo: fixture_data["teams"]["home"]["logo"],
-          away_team_logo: fixture_data["teams"]["away"]["logo"]
+          elapsed: fixture_data["fixture"]["status"]["elapsed"]
         )
         Rails.logger.debug "Match updated: #{match.inspect}"
+
+        Prediction.recalculate_points_for_match(match)
       else
         Rails.logger.debug "Match not found for fixture_id: #{fixture_id}"
       end
@@ -73,7 +73,8 @@ class ApiFootballService
           home_team_logo: fixture_data["teams"]["home"]["logo"],
           away_team_logo: fixture_data["teams"]["away"]["logo"]
         )
-        Rails.logger.debug "Live match updated: #{match.inspect}"
+        # Recalcula los puntos para todas las predicciones de este partido
+        Prediction.recalculate_points_for_match(match)
       else
         Rails.logger.debug "Live match not found for fixture_id: #{fixture_data["fixture"]["id"]}"
       end

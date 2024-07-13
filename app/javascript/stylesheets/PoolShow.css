@@ -32,6 +32,13 @@ body {
   margin: 5px 0;
 }
 
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .subtitle {
   font-size: 20px;
   font-weight: bold;
@@ -94,6 +101,17 @@ body {
   text-align: center;
 }
 
+.score-input-field {
+  width: 25px;
+  padding: 5px;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 4px;
+  border: 1px solid #595959;
+  background: #595959;
+  color: #d4d4d4;
+}
+
 .elapsed-status {
   color: #aaaaaa;
   text-align: center;
@@ -132,12 +150,42 @@ body {
 
 .detail-score {
   text-align: center;
+  background: #4f524f;
+  padding: 3px 5px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.detail-score-ft {
+  text-align: center;
   margin-left: 10px;
+  background: #4f524f;
+  padding: 3px 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  z-index: 1;
+}
+
+.detail-points-5 {
+  color: #00ff00;
+  text-align: center;
+  background: #6d706d;
+  padding: 3px 5px;
+  border-radius: 0 5px 5px 0;
+  font-weight: bold;
+  margin-left: -14px;
+  z-index: 0;
 }
 
 .detail-points {
-  color: #00ff00; /* Puedes cambiar el color según sea necesario */
+  color: #cfd3cf;
   text-align: center;
+  background: #6d706d;
+  padding: 3px 5px;
+  border-radius: 0 5px 5px 0;
+  font-weight: bold;
+  margin-left: -14px;
+  z-index: 0;
 }
 
 .no-matches {
@@ -208,4 +256,69 @@ body {
 
 .creator-actions button:hover {
   text-decoration: none;
+}
+
+.edit-button {
+  padding: 5px 10px;
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  float: right;
+  margin-top: -25px;
+}
+
+.edit-button:hover {
+  background-color: #e68a00;
+}
+
+.edit-prediction-form {
+  background-color: #2e2e2e;
+  padding: 10px;
+  margin-top: 20px;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.score-input {
+  width: 50px;
+  text-align: center;
+  margin: 0 10px;
+  font-size: 18px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0px;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+.cancel-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin: 5px 0 0 0;
+}
+
+.cancel-button:hover {
+  background-color: #c82333;
 }
