@@ -10,10 +10,24 @@ class PoolsController < ApplicationController
   end
 
   def show
+    api_service = ApiFootballService.new
+  
+    # Actualizar partidos en vivo y resultados finales
+    @pool.matches.each do |match|
+      if match.status != "Match Finished"
+        api_service.update_fixture(match.fixture_id)
+        match.reload
+      end
+    end
+  
+    # Actualizar partidos en vivo
+    api_service.update_live_fixtures
+  
+    @pool.reload
     @matches = @pool.matches
     @user_is_creator = current_user == @pool.user
     @user_is_participant = @pool.users.include?(current_user)
-
+  
     props = {
       pool: {
         id: @pool.id,
@@ -26,14 +40,39 @@ class PoolsController < ApplicationController
         user_id: @pool.user_id,
         created_at: @pool.created_at,
         updated_at: @pool.updated_at,
-        matches: @matches.map { |match| { id: match.id, home_team: match.home_team, away_team: match.away_team, date: match.date } }
+        matches: @matches.map do |match|
+          {
+            id: match.id,
+            home_team: match.home_team,
+            home_team_logo: match.home_team_logo,
+            away_team: match.away_team,
+            away_team_logo: match.away_team_logo,
+            date: match.date,
+            home_team_score: match.home_team_score,
+            away_team_score: match.away_team_score,
+            status: match.status,
+            elapsed: match.elapsed
+          }
+        end
       },
       userIsCreator: @user_is_creator,
-      userIsParticipant: @user_is_participant
+      userIsParticipant: @user_is_participant,
+      currentUser: {
+        id: current_user.id,
+        predictions: current_user.predictions.map do |p|
+          {
+            match_id: p.match_id,
+            home_team_score: p.home_team_score,
+            away_team_score: p.away_team_score
+          }
+        end
+      }
     }.to_json
-
+  
+    Rails.logger.debug "Props: #{props}"
+  
     @props = props
-  end
+  end  
 
   def new
     @pool = Pool.new

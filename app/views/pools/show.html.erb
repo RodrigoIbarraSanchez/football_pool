@@ -10,7 +10,19 @@
     user_id: @pool.user_id,
     created_at: @pool.created_at,
     updated_at: @pool.updated_at,
-    matches: @matches.map { |match| { id: match.id, home_team: match.home_team, away_team: match.away_team, date: match.date, venue: match.venue } }
+    matches: @matches.map { |match| { 
+      id: match.id, 
+      home_team: match.home_team, 
+      home_team_logo: match.home_team_logo,
+      away_team: match.away_team, 
+      away_team_logo: match.away_team_logo,
+      date: match.date, 
+      venue: match.venue,
+      home_team_score: match.home_team_score,
+      away_team_score: match.away_team_score,
+      status: match.status,
+      elapsed: match.elapsed,
+    } }
   },
   notice: flash[:notice],
   userIsCreator: @user_is_creator,

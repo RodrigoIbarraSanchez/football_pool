@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_11_162945) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_13_053406) do
   create_table "matches", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -22,6 +22,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_11_162945) do
     t.string "round"
     t.integer "league_id"
     t.integer "fixture_id", null: false
+    t.integer "home_team_score"
+    t.integer "away_team_score"
+    t.string "status"
+    t.integer "elapsed"
+    t.string "home_team_logo"
+    t.string "away_team_logo"
     t.index ["fixture_id"], name: "index_matches_on_fixture_id", unique: true
   end
 
@@ -60,6 +66,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_11_162945) do
     t.integer "away_team_score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "points"
     t.index ["match_id"], name: "index_predictions_on_match_id"
     t.index ["pool_id"], name: "index_predictions_on_pool_id"
     t.index ["user_id"], name: "index_predictions_on_user_id"
