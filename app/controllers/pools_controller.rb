@@ -146,39 +146,71 @@ class PoolsController < ApplicationController
                               .joins(:predictions)
                               .group("users.id")
                               .order("total_points DESC")
-  
-    props = {
-      pool: {
-        id: @pool.id,
-        title: @pool.title,
-        description: @pool.description,
-        prize: @pool.prize,
-      },
-      participants: @participants.map do |participant|
-        {
-          id: participant.id,
-          email: participant.email,
-          username: participant.username,
-          first_name: participant.first_name,
-          last_name: participant.last_name,
-          phone: participant.phone,
-          profile_picture_url: participant.profile_picture.attached? ? url_for(participant.profile_picture) : nil,
-          total_points: participant.total_points,
-          predictions: participant.predictions.where(pool: @pool).map do |prediction|
+
+    respond_to do |format|
+      format.html do
+        props = {
+          pool: {
+            id: @pool.id,
+            title: @pool.title,
+            description: @pool.description,
+            prize: @pool.prize,
+          },
+          participants: @participants.map do |participant|
             {
-              match_id: prediction.match_id,
-              home_team_score: prediction.home_team_score,
-              away_team_score: prediction.away_team_score,
-              points: prediction.points,
+              id: participant.id,
+              email: participant.email,
+              username: participant.username,
+              first_name: participant.first_name,
+              last_name: participant.last_name,
+              phone: participant.phone,
+              profile_picture_url: participant.profile_picture.attached? ? url_for(participant.profile_picture) : nil,
+              total_points: participant.total_points,
+              predictions: participant.predictions.where(pool: @pool).map do |prediction|
+                {
+                  match_id: prediction.match_id,
+                  home_team_score: prediction.home_team_score,
+                  away_team_score: prediction.away_team_score,
+                  points: prediction.points,
+                }
+              end
+            }
+          end
+        }.to_json
+
+        render html: "<div id='react-root' data-props='#{props}'></div>".html_safe
+      end
+      format.json do
+        render json: {
+          pool: {
+            id: @pool.id,
+            title: @pool.title,
+            description: @pool.description,
+            prize: @pool.prize,
+          },
+          participants: @participants.map do |participant|
+            {
+              id: participant.id,
+              email: participant.email,
+              username: participant.username,
+              first_name: participant.first_name,
+              last_name: participant.last_name,
+              phone: participant.phone,
+              profile_picture_url: participant.profile_picture.attached? ? url_for(participant.profile_picture) : nil,
+              total_points: participant.total_points,
+              predictions: participant.predictions.where(pool: @pool).map do |prediction|
+                {
+                  match_id: prediction.match_id,
+                  home_team_score: prediction.home_team_score,
+                  away_team_score: prediction.away_team_score,
+                  points: prediction.points,
+                }
+              end
             }
           end
         }
       end
-    }
-  
-    Rails.logger.debug "Props for leaderboard: #{props.to_json}"
-  
-    @props = props.to_json
+    end
   end
 
   private
