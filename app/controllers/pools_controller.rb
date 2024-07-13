@@ -1,4 +1,6 @@
 class PoolsController < ApplicationController
+  include Rails.application.routes.url_helpers
+
   before_action :set_pool, only: %i[show edit update destroy join]
   before_action :authenticate_user!, except: %i[show index]
   before_action :authorize_pool_creation, only: %i[new create]
@@ -138,6 +140,47 @@ class PoolsController < ApplicationController
     redirect_to @pool, notice: "¡Listo! Ahora eres parte de la quiniela."
   end
 
+  def leaderboard
+    @pool = Pool.find(params[:id])
+    @participants = @pool.users.select("users.*, SUM(predictions.points) AS total_points")
+                              .joins(:predictions)
+                              .group("users.id")
+                              .order("total_points DESC")
+  
+    props = {
+      pool: {
+        id: @pool.id,
+        title: @pool.title,
+        description: @pool.description,
+        prize: @pool.prize,
+      },
+      participants: @participants.map do |participant|
+        {
+          id: participant.id,
+          email: participant.email,
+          username: participant.username,
+          first_name: participant.first_name,
+          last_name: participant.last_name,
+          phone: participant.phone,
+          profile_picture_url: participant.profile_picture.attached? ? url_for(participant.profile_picture) : nil,
+          total_points: participant.total_points,
+          predictions: participant.predictions.where(pool: @pool).map do |prediction|
+            {
+              match_id: prediction.match_id,
+              home_team_score: prediction.home_team_score,
+              away_team_score: prediction.away_team_score,
+              points: prediction.points,
+            }
+          end
+        }
+      end
+    }
+  
+    Rails.logger.debug "Props for leaderboard: #{props.to_json}"
+  
+    @props = props.to_json
+  end
+
   private
 
     def set_pool
@@ -208,5 +251,5 @@ class PoolsController < ApplicationController
       else
         logger.error "API response was nil or did not contain 'response'"
       end
-    end                   
+    end
 end

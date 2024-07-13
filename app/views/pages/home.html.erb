@@ -3,6 +3,7 @@
   notice: @notice,
   userSignedIn: user_signed_in?,
   currentUser: @current_user ? { id: @current_user.id, admin: @current_user.admin? } : nil,
+  csrfToken: form_authenticity_token
 }.to_json %>
 
 <div id="react-root" data-props="<%= @props %>"></div>

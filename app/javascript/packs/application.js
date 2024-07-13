@@ -2,6 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import PoolsIndex from '../components/PoolsIndex';
 import PoolShow from '../components/PoolShow';
+import Leaderboard from '../components/Leaderboard';
 
 document.addEventListener('DOMContentLoaded', () => {
   const rootElement = document.getElementById('react-root');
@@ -11,7 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const root = createRoot(rootElement);
     const path = window.location.pathname;
 
-    if (path.match(/^\/pools\/\d+$/)) {
+    if (path.match(/^\/pools\/\d+\/leaderboard$/)) {
+      root.render(<Leaderboard {...props} />);
+    } else if (path.match(/^\/pools\/\d+$/)) {
       root.render(<PoolShow {...props} />);
     } else {
       root.render(<PoolsIndex {...props} />);
