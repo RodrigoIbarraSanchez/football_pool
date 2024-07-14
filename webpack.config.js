@@ -1,5 +1,9 @@
 const { webpackConfig } = require('@rails/webpacker');
-const { merge } = require('webpack-merge'); // Importa correctamente desde webpack-merge
+const { merge } = require('webpack-merge');
+
+if (!webpackConfig) {
+  throw new Error("webpackConfig is not defined. Make sure @rails/webpacker is properly installed and configured.");
+}
 
 const customConfig = {
   resolve: {
@@ -18,4 +22,4 @@ const customConfig = {
   },
 };
 
-module.exports = merge(webpackConfig, customConfig); // Usa merge para combinar configuraciones
+module.exports = merge(webpackConfig, customConfig);
