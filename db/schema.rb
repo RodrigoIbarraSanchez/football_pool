@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2024_07_13_163605) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,10 +43,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_163605) do
   end
 
   create_table "matches", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "home_team"
     t.string "away_team"
+    t.datetime "match_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "date"
     t.string "venue"
     t.string "city"
@@ -60,8 +64,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_163605) do
   end
 
   create_table "matches_pools", id: false, force: :cascade do |t|
-    t.integer "pool_id", null: false
-    t.integer "match_id", null: false
+    t.bigint "pool_id", null: false
+    t.bigint "match_id", null: false
     t.index ["match_id", "pool_id"], name: "index_matches_pools_on_match_id_and_pool_id"
     t.index ["pool_id", "match_id"], name: "index_matches_pools_on_pool_id_and_match_id"
   end
@@ -73,23 +77,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_163605) do
     t.boolean "isStarted"
     t.boolean "isFinished"
     t.string "prize"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_pools_on_user_id"
   end
 
   create_table "pools_users", id: false, force: :cascade do |t|
-    t.integer "pool_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "pool_id", null: false
+    t.bigint "user_id", null: false
     t.index ["pool_id"], name: "index_pools_users_on_pool_id"
     t.index ["user_id"], name: "index_pools_users_on_user_id"
   end
 
   create_table "predictions", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "pool_id", null: false
-    t.integer "match_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "pool_id", null: false
+    t.bigint "match_id", null: false
     t.integer "home_team_score"
     t.integer "away_team_score"
     t.datetime "created_at", null: false
@@ -108,7 +112,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_163605) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "role"
+    t.string "role", default: "regular"
     t.string "username"
     t.string "first_name"
     t.string "last_name"

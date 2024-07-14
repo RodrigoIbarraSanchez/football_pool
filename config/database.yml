@@ -1,19 +1,22 @@
 default: &default
-  adapter: sqlite3
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: fdep_admin
+  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
+  host: localhost
 
 development:
   <<: *default
-  database: storage/development.sqlite3
+  database: fdep_development
 
 test:
   <<: *default
-  database: storage/test.sqlite3
+  database: fdep_test
 
 production:
-  adapter: postgresql
+  <<: *default
   database: fdep_production
   username: fdep_admin
-  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
-  host: <%= ENV['MYAPP_DATABASE_HOST'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
