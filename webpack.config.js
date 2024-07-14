@@ -1,4 +1,6 @@
-const { webpackConfig, merge } = require('@rails/webpacker');
+const { webpackConfig } = require('@rails/webpacker');
+const { merge } = require('webpack-merge'); // Importa correctamente desde webpack-merge
+
 const customConfig = {
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -16,4 +18,4 @@ const customConfig = {
   },
 };
 
-module.exports = merge(webpackConfig, customConfig);
+module.exports = merge(webpackConfig, customConfig); // Usa merge para combinar configuraciones
