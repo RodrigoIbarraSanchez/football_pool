@@ -1,19 +1,25 @@
-const path = require('path');
+const { webpackConfig } = require('@rails/webpacker');
 const { merge } = require('webpack-merge');
-const CompressionPlugin = require('compression-webpack-plugin');
 
-module.exports = merge({
-  mode: 'production',
-  entry: './src/index.js', // Asegúrate de que esta línea apunta al archivo correcto
-  output: {
-    filename: '[name].[contenthash].js',
-    path: path.resolve(__dirname, 'dist'),
-    clean: true,
+if (!webpackConfig) {
+  throw new Error("webpackConfig is not defined. Make sure @rails/webpacker is properly installed and configured.");
+}
+
+const customConfig = {
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
-  plugins: [
-    new CompressionPlugin({
-      algorithm: 'gzip',
-      test: /\.js(\?.*)?$/i,
-    }),
-  ],
-});
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
+    ],
+  },
+};
+
+module.exports = merge(webpackConfig, customConfig);
