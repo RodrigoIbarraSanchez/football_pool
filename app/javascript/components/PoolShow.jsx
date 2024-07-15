@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../stylesheets/PoolShow.css';
 
-const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser, csrfToken, matches }) => {
+const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser, csrfToken }) => {
   const [editingPrediction, setEditingPrediction] = useState(null);
   const location = useLocation();
 
@@ -19,6 +19,12 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser,
   const handleCancelClick = () => {
     setEditingPrediction(null);
   };
+
+  // Eliminar duplicados en el array de matches
+  const uniqueMatches = Array.from(new Set(pool.matches.map(match => match.id)))
+    .map(id => {
+      return pool.matches.find(match => match.id === id);
+    });
 
   return (
     <div className="container">
@@ -70,7 +76,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser,
                     <h4 className="subtitle"><strong>{userTotalPoints}</strong> puntos</h4>
                   </div>
                   <ul className="predictions-list">
-                    {pool.matches.map(match => {
+                    {uniqueMatches.map(match => {
                       const prediction = currentUser.predictions.find(p => p.match_id === match.id);
                       if (!prediction) return null;
                       return (
@@ -110,7 +116,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser,
                   <h3 className="subtitle">Completa tus predicciones</h3>
                   <form action="/predictions" method="post" className="predictions-form">
                     <input type="hidden" name="authenticity_token" value={csrfToken} />
-                    {pool.matches.map(match => {
+                    {uniqueMatches.map(match => {
                       if (!currentUser.predictions.some(p => p.match_id === match.id)) {
                         return (
                           <div key={match.id} className="prediction-item">
@@ -148,9 +154,9 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser,
       {!userIsParticipant && (
         <>
           <h2 className="subtitle">Matches</h2>
-          {matches && matches.length > 0 ? (
+          {uniqueMatches && uniqueMatches.length > 0 ? (
             <ul className="predictions-list">
-              {matches.map(match => (
+              {uniqueMatches.map(match => (
                 <li key={match.id} className="prediction-item">
                   <div className="prediction-teams">
                     <div className="team">
@@ -183,13 +189,6 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser,
             <input type="hidden" name="_method" value="delete" />
             <button type="submit">Destroy this pool</button>
           </form>
-        </div>
-      )}
-
-      {/* Enlace para crear un nuevo pool */}
-      {userIsAdmin && (
-        <div className="create-new-pool">
-          <Link to="/pools/new" className="create-new-pool-button">Crear nuevo pool</Link>
         </div>
       )}
     </div>

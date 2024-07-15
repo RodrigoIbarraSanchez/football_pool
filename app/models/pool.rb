@@ -20,4 +20,6 @@ class Pool < ApplicationRecord
   has_many :predictions, dependent: :destroy
 
   validates :title, presence: { message: "- El título es obligatorio" }
+  validates :description, presence: true
+  validates :user, presence: true
 end

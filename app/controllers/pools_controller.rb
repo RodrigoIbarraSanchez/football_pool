@@ -87,17 +87,20 @@ class PoolsController < ApplicationController
     authorize Pool
     logger.debug "Entering PoolsController#create"
     logger.debug "Pool Params: #{pool_params.inspect}"
-  
+    logger.debug "Current User: #{current_user.inspect}"
+
     @pool = current_user.pools.build(pool_params)
-  
+    @pool.user = current_user
+    logger.debug "Pool Built: #{@pool.inspect}"
+
     # Filtrar valores vacíos y convertir a enteros
-    fixture_ids = pool_params[:match_ids].reject(&:blank?).map(&:to_i)
-    logger.debug "Fixture IDs: #{fixture_ids}"
-  
-    matches = Match.where(fixture_id: fixture_ids) # Cambiado de :id a :fixture_id
-    logger.debug "Matches Found: #{matches.pluck(:fixture_id)}"
+    match_ids = pool_params[:match_ids].reject(&:blank?).map(&:to_i)
+    logger.debug "Match IDs: #{match_ids}"
+
+    matches = Match.where(id: match_ids)
+    logger.debug "Matches Found: #{matches.pluck(:id)}"
     logger.debug "Matches Count: #{matches.count}"
-  
+
     respond_to do |format|
       if @pool.save
         @pool.matches << matches
@@ -109,7 +112,7 @@ class PoolsController < ApplicationController
         format.json { render json: @pool.errors, status: :unprocessable_entity }
       end
     end
-  end    
+  end
 
   def edit
     @matches = get_current_round_matches

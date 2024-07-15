@@ -2,32 +2,44 @@
 <h1>New pool</h1>
 
 <%= form_with(model: @pool, local: true) do |form| %>
-  <div>
+  <% if @pool.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pool.errors.count, "error") %> prohibited this pool from being saved:</h2>
+      <ul>
+        <% @pool.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
     <%= form.label :title %>
     <%= form.text_field :title %>
   </div>
 
-  <div>
+  <div class="field">
     <%= form.label :description %>
     <%= form.text_area :description %>
   </div>
 
-  <h2>Matches</h2>
-  <% if @matches.present? %>
-    <ul>
-      <% @matches.each do |match| %>
-        <li>
-          <%= check_box_tag "pool[match_ids][]", match.id %>
-          <%= "#{match.home_team} vs #{match.away_team} at #{match.venue} on #{match.date}" %>
-        </li>
+  <div class="field">
+    <%= form.label :matches %>
+    <div>
+      <% Match.all.each do |match| %>
+        <div>
+          <%= check_box_tag "pool[match_ids][]", match.id, @pool.matches.include?(match) %>
+          <%= label_tag "pool_match_ids_#{match.id}", "#{match.home_team} vs #{match.away_team} - #{match.date}" %>
+        </div>
       <% end %>
-    </ul>
-  <% else %>
-    <p>No matches available.</p>
-  <% end %>
+    </div>
+  </div>
 
-  <%= form.submit "Create Pool" %>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
 <% end %>
+
 
 <div>
   <%= link_to "Back to pools", pools_path %>
