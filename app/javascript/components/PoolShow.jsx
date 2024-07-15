@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../stylesheets/PoolShow.css';
 
-const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser, csrfToken }) => {
+const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser, csrfToken, matches }) => {
   const [editingPrediction, setEditingPrediction] = useState(null);
   const location = useLocation();
 
@@ -148,9 +148,9 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser,
       {!userIsParticipant && (
         <>
           <h2 className="subtitle">Matches</h2>
-          {pool.matches.length > 0 ? (
+          {matches && matches.length > 0 ? (
             <ul className="predictions-list">
-              {pool.matches.map(match => (
+              {matches.map(match => (
                 <li key={match.id} className="prediction-item">
                   <div className="prediction-teams">
                     <div className="team">
@@ -183,6 +183,13 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser,
             <input type="hidden" name="_method" value="delete" />
             <button type="submit">Destroy this pool</button>
           </form>
+        </div>
+      )}
+
+      {/* Enlace para crear un nuevo pool */}
+      {userIsAdmin && (
+        <div className="create-new-pool">
+          <Link to="/pools/new" className="create-new-pool-button">Crear nuevo pool</Link>
         </div>
       )}
     </div>
