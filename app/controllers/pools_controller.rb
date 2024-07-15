@@ -1,6 +1,7 @@
 class PoolsController < ApplicationController
   include Rails.application.routes.url_helpers
 
+  before_action :save_current_round_matches, only: %i[new create]
   before_action :set_pool, only: %i[show edit update destroy join]
   before_action :authenticate_user!, except: %i[show index]
   before_action :authorize_pool_creation, only: %i[new create]
@@ -79,7 +80,7 @@ class PoolsController < ApplicationController
 
   def new
     @pool = Pool.new
-    # @matches = get_current_round_matches
+    @matches = get_current_round_matches
     Rails.logger.debug "Matches loaded: #{@matches.inspect}" # Línea de depuración
   end
   
@@ -265,6 +266,8 @@ class PoolsController < ApplicationController
     end                   
 
     def save_current_round_matches
+      logger.debug "Entering save_current_round_matches"
+      
       season = 2024
       from = Date.today
       to = from + 7.days
@@ -282,17 +285,27 @@ class PoolsController < ApplicationController
     
           match = Match.find_or_initialize_by(fixture_id: fixture_id.to_i)
           match.attributes = {
-            fixture_id: fixture_id.to_i,
             home_team: fixture.dig("teams", "home", "name"),
             away_team: fixture.dig("teams", "away", "name"),
-            date: fixture.dig("fixture", "date")
+            date: fixture.dig("fixture", "date"),
+            venue: fixture.dig("fixture", "venue", "name"),
+            city: fixture.dig("fixture", "venue", "city"),
+            league_id: fixture.dig("league", "id"),
+            home_team_logo: fixture.dig("teams", "home", "logo"),
+            away_team_logo: fixture.dig("teams", "away", "logo")
           }
-          match.save!
+          if match.save
+            logger.debug "Match saved: #{match.inspect}"
+          else
+            logger.error "Failed to save match: #{match.errors.full_messages.join(', ')}"
+          end
         end
       else
         logger.error "API response was nil or did not contain 'response'"
       end
-    end
+      
+      logger.debug "Exiting save_current_round_matches"
+    end       
 
     def load_matches
       @matches = Match.all
