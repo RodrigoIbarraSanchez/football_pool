@@ -73,3 +73,5 @@ gem 'httparty'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'byebug', group: [:development, :test]
 gem "webpacker", "~> 5.4"
+gem 'cloudinary'
+gem 'activestorage-cloudinary-service'
