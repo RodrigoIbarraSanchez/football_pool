@@ -221,7 +221,12 @@ class PoolsController < ApplicationController
   private
 
     def set_pool
-      @pool = Pool.find(params[:id])
+      @pool = Pool.find_by(id: params[:id])
+      unless @pool
+        Rails.logger.error "Pool with ID #{params[:id]} not found"
+        flash[:alert] = "Pool not found"
+        redirect_to root_path
+      end
     end
 
     def pool_params

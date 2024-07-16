@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
+    sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
   
@@ -8,6 +9,10 @@ Rails.application.routes.draw do
       match 'join', via: [:get, :post]
       get 'leaderboard'
     end
+  end
+
+  devise_scope :user do
+    delete 'logout', to: 'devise/sessions#destroy'
   end
 
   resources :predictions, only: [:create, :update]
