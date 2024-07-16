@@ -125,15 +125,12 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser,
                                 <img src={match.home_team_logo} alt={match.home_team} className="team-logo" />
                                 <span className={`team-name ${isLongName(match.home_team) ? 'long-name' : ''}`}>{match.home_team}</span>
                               </div>
-                              <div className="score-input">
-                                <input type="number" name="prediction[home_team_score][]" className="score-input-field" />
-                              </div>
+                              <input type="number" name="prediction[home_team_score][]" className="score-input" />
+                              -
+                              <input type="number" name="prediction[away_team_score][]" className="score-input" />
                               <div className="team">
                                 <img src={match.away_team_logo} alt={match.away_team} className="team-logo" />
                                 <span className={`team-name ${isLongName(match.away_team) ? 'long-name' : ''}`}>{match.away_team}</span>
-                              </div>
-                              <div className="score-input">
-                                <input type="number" name="prediction[away_team_score][]" className="score-input-field" />
                               </div>
                             </div>
                             <input type="hidden" name="prediction[match_id][]" value={match.id} />

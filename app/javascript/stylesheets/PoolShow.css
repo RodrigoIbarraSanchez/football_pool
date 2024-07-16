@@ -70,7 +70,7 @@ body {
 .team {
   display: flex;
   align-items: center;
-  width: 40%;
+  width: 30%;
 }
 
 .team-logo {
@@ -283,9 +283,9 @@ body {
 }
 
 .score-input {
-  width: 50px;
+  width: 20px;
   text-align: center;
-  margin: 0 10px;
+  margin: 0 5px;
   font-size: 18px;
   padding: 5px;
   border-radius: 5px;
