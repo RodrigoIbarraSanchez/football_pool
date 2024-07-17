@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import Modal from 'react-modal';
 import '../stylesheets/PoolShow.css';
+import MatchModal from './modals/MatchModal';
 
 const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser, csrfToken }) => {
-  const [editingPrediction, setEditingPrediction] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedMatch, setSelectedMatch] = useState(null);
   const location = useLocation();
 
   const userHasPredictions = currentUser.predictions.length > 0;
@@ -12,19 +15,23 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser,
 
   const userTotalPoints = currentUser.predictions.reduce((acc, prediction) => acc + prediction.points, 0);
 
-  const handleEditClick = (prediction) => {
-    setEditingPrediction(prediction);
+  const openModal = (match) => {
+    setSelectedMatch(match);
+    setIsModalOpen(true);
   };
 
-  const handleCancelClick = () => {
-    setEditingPrediction(null);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedMatch(null);
   };
 
   // Eliminar duplicados en el array de matches
-  const uniqueMatches = Array.from(new Set(pool.matches.map(match => match.id)))
+  const uniqueMatches = Array.from(new Set((pool.matches || []).map(match => match.id)))
     .map(id => {
-      return pool.matches.find(match => match.id === id);
+      return (pool.matches || []).find(match => match.id === id);
     });
+
+    console.log('pool:', pool);
 
   return (
     <div className="container">
@@ -38,78 +45,40 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser,
 
       {location.pathname === `/pools/${pool.id}` && (
         <>
-          {!userIsParticipant && !pool.isFinished && (
-            <button className="join-button" onClick={() => window.location.href = `/pools/${pool.id}/join`} disabled={pool.isStarted}>Unirme a la Quiniela</button>
+          {!userIsParticipant && (
+            <button className="join-button" onClick={() => window.location.href = `/pools/${pool.id}/join`} disabled={pool.isStarted || pool.isFinished}>Join this pool</button>
           )}
 
           {userIsParticipant && (
             <>
-              {editingPrediction ? (
-                <div className="edit-prediction-form">
-                  <h3 className="subtitle">Editar Predicción</h3>
-                  <form action={`/predictions/${editingPrediction.id}`} method="post">
-                    <input type="hidden" name="_method" value="patch" />
-                    <input type="hidden" name="authenticity_token" value={csrfToken} />
-                    <div className="prediction-item">
+              <div className='header'>
+                <h3 className="subtitle">Tus Predicciones</h3>
+                <h4 className="subtitle"><strong>{userTotalPoints}</strong> puntos</h4>
+              </div>
+              <ul className="predictions-list">
+                {uniqueMatches.map(match => {
+                  const prediction = currentUser.predictions.find(p => p.match_id === match.id);
+                  if (!prediction) return null;
+                  return (
+                    <li key={match.id} className="prediction-item" onClick={() => openModal(match)}>
                       <div className="prediction-teams">
                         <div className="team">
-                          <img src={editingPrediction.home_team_logo} alt={editingPrediction.home_team} className="team-logo" />
-                          <span className={`team-name ${isLongName(editingPrediction.home_team) ? 'long-name' : ''}`}>{editingPrediction.home_team}</span>
+                          <img src={match.home_team_logo} alt={match.home_team} className="team-logo" />
+                          <span className={`team-name ${isLongName(match.home_team) ? 'long-name' : ''}`}>{match.home_team}</span>
                         </div>
-                        <input type="number" name="prediction[home_team_score]" className="score-input" defaultValue={editingPrediction.home_team_score} />
-                        -
-                        <input type="number" name="prediction[away_team_score]" className="score-input" defaultValue={editingPrediction.away_team_score} />
+                        <span className="score">{match.home_team_score || 0} - {match.away_team_score || 0}</span>
                         <div className="team">
-                          <span className={`team-name ${isLongName(editingPrediction.away_team) ? 'long-name' : ''}`}>{editingPrediction.away_team}</span>
-                          <img src={editingPrediction.away_team_logo} alt={editingPrediction.away_team} className="team-logo" />
+                          <span className={`team-name ${isLongName(match.away_team) ? 'long-name' : ''}`}>{match.away_team}</span>
+                          <img src={match.away_team_logo} alt={match.away_team} className="team-logo" />
                         </div>
                       </div>
-                    </div>
-                    <button type="submit" className="submit-button">Guardar cambios</button>
-                    <button type="button" className="cancel-button" onClick={handleCancelClick}>Cancelar</button>
-                  </form>
-                </div>          
-              ) : (
-                <>
-                  <div className='header'>
-                    <h3 className="subtitle">Tus Predicciones</h3>
-                    <h4 className="subtitle"><strong>{userTotalPoints}</strong> puntos</h4>
-                  </div>
-                  <ul className="predictions-list">
-                    {uniqueMatches.map(match => {
-                      const prediction = currentUser.predictions.find(p => p.match_id === match.id);
-                      if (!prediction) return null;
-                      return (
-                        <li key={match.id} className="prediction-item">
-                          <div className="prediction-teams">
-                            <div className="team">
-                              <img src={match.home_team_logo} alt={match.home_team} className="team-logo" />
-                              <span className={`team-name ${isLongName(match.home_team) ? 'long-name' : ''}`}>{match.home_team}</span>
-                            </div>
-                            <span className="score">{match.home_team_score || 0} - {match.away_team_score || 0}</span>
-                            <div className="team">
-                              <span className={`team-name ${isLongName(match.away_team) ? 'long-name' : ''}`}>{match.away_team}</span>
-                              <img src={match.away_team_logo} alt={match.away_team} className="team-logo" />
-                            </div>
-                          </div>
-                          <span className={(match.status === '1H' || match.status === '2H') ? 'elapsed-status-live' : 'elapsed-status'}>{
-                            match.status === 'NS' ? 'NS' : match.status === 'FT' ? 'FT' : `${match.elapsed}'`
-                          } </span>
-                          <div className="prediction-container">
-                            <div className="prediction-details">
-                              <span className={(match.status === 'FT' ? 'detail-score-ft': 'detail-score')}>{prediction ? prediction.home_team_score : '-'} - {prediction ? prediction.away_team_score : '-'}</span>
-                              {match.status === 'FT' && prediction && <span className={(prediction.points === 5 || prediction.points === 2 ? 'detail-points-5' : 'detail-points')}>+{prediction.points}</span>}
-                            </div>
-                          </div>
-                          {match.status === 'NS' && (
-                            <button className="edit-button" onClick={() => handleEditClick({ ...prediction, match })}>Editar</button>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </>
-              )}
+                      <span className={(match.status === '1H' || match.status === '2H') ? 'elapsed-status-live' : 'elapsed-status'}>{
+                        match.status === 'NS' ? 'NS' : match.status === 'FT' ? 'FT' : `${match.elapsed}'`
+                      } </span>
+                    </li>
+                  );
+                })}
+              </ul>
 
               {!userHasPredictions && (
                 <>
@@ -188,6 +157,13 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser,
           </form>
         </div>
       )}
+
+      <MatchModal
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        selectedMatch={selectedMatch}
+        participants={pool.participants || []}
+      />
     </div>
   );
 };

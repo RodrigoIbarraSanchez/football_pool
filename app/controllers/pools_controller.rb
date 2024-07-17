@@ -32,6 +32,23 @@ class PoolsController < ApplicationController
     @user_is_creator = current_user == @pool.user
     @user_is_participant = @pool.users.include?(current_user)
   
+    participants = @pool.users.includes(:predictions).map do |user|
+      {
+        id: user.id,
+        email: user.email,
+        predictions: user.predictions.where(pool: @pool).map do |prediction|
+          {
+            match_id: prediction.match_id,
+            home_team_score: prediction.home_team_score,
+            away_team_score: prediction.away_team_score,
+            points: prediction.points
+          }
+        end
+      }
+    end
+  
+    Rails.logger.debug "Participants: #{participants}"
+  
     props = {
       pool: {
         id: @pool.id,
@@ -57,7 +74,8 @@ class PoolsController < ApplicationController
             status: match.status,
             elapsed: match.elapsed
           }
-        end
+        end,
+        participants: participants
       },
       userIsCreator: @user_is_creator,
       userIsParticipant: @user_is_participant,
@@ -76,7 +94,7 @@ class PoolsController < ApplicationController
     Rails.logger.debug "Props: #{props}"
   
     @props = props
-  end  
+  end   
 
   def new
     @pool = Pool.new

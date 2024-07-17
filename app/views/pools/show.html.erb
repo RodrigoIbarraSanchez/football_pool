@@ -22,7 +22,21 @@
       away_team_score: match.away_team_score,
       status: match.status,
       elapsed: match.elapsed,
-    } }
+    } },
+    participants: @pool.users.includes(:predictions).map { |user| 
+      { 
+        id: user.id, 
+        email: user.email,
+        predictions: user.predictions.where(pool: @pool).map { |prediction| 
+          { 
+            match_id: prediction.match_id, 
+            home_team_score: prediction.home_team_score, 
+            away_team_score: prediction.away_team_score, 
+            points: prediction.points 
+          } 
+        } 
+      } 
+    }
   },
   notice: flash[:notice],
   userIsCreator: @user_is_creator,
