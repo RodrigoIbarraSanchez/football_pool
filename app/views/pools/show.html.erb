@@ -51,7 +51,8 @@
       points: prediction.points,
       home_team_logo: prediction.match.home_team_logo,
       away_team_logo: prediction.match.away_team_logo,
-    } }
+    } },
+    admin: current_user.admin?
   },
   csrfToken: form_authenticity_token
 }.to_json %>

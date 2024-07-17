@@ -5,6 +5,7 @@ import '../stylesheets/PoolShow.css';
 import MatchModal from './modals/MatchModal';
 
 const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser, csrfToken }) => {
+  console.log('currentUser:', currentUser);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMatch, setSelectedMatch] = useState(null);
   const location = useLocation();
