@@ -15,6 +15,8 @@ const customStyles = {
     maxHeight: '90vh',
     padding: '20px',
     overflow: 'auto',
+    marginLeft: '50%',
+    marginTop: '100%'
   },
 };
 
