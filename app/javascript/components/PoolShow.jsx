@@ -60,7 +60,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser,
                   const prediction = currentUser.predictions.find(p => p.match_id === match.id);
                   if (!prediction) return null;
                   return (
-                    <li key={match.id} className="prediction-item">
+                    <li key={match.id} className="prediction-item" onClick={() => openModal(match)}>
                       <div className="prediction-teams">
                         <div className="team">
                           <img src={match.home_team_logo} alt={match.home_team} className="team-logo" />
