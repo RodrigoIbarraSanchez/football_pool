@@ -32,6 +32,8 @@ const MatchModal = ({ isModalOpen, closeModal, selectedMatch, participants, curr
     return bPoints - aPoints;
   });
 
+  console.log(sortedParticipants);
+
   return (
     <Modal
       isOpen={isModalOpen}

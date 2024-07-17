@@ -27,6 +27,7 @@
       { 
         id: user.id, 
         email: user.email,
+        first_name: user.first_name,
         predictions: user.predictions.where(pool: @pool).map { |prediction| 
           { 
             match_id: prediction.match_id, 
