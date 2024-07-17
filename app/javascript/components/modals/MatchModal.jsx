@@ -4,10 +4,6 @@ import './MatchModal.css';
 
 const customStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
     width: '90%',
@@ -18,7 +14,15 @@ const customStyles = {
 Modal.setAppElement('#react-root');
 
 const MatchModal = ({ isModalOpen, closeModal, selectedMatch, participants }) => {
+  console.log(selectedMatch);
   const isLongName = name => name && name.length > 10;
+
+  // Ordenar los participantes por puntos de mayor a menor
+  const sortedParticipants = participants.sort((a, b) => {
+    const aPoints = a.predictions.reduce((acc, pred) => acc + pred.points, 0);
+    const bPoints = b.predictions.reduce((acc, pred) => acc + pred.points, 0);
+    return bPoints - aPoints;
+  });
 
   return (
     <Modal
@@ -54,7 +58,7 @@ const MatchModal = ({ isModalOpen, closeModal, selectedMatch, participants }) =>
               </tr>
             </thead>
             <tbody>
-              {participants.map((user, index) => {
+              {sortedParticipants.map((user, index) => {
                 const prediction = user.predictions.find(p => p.match_id === selectedMatch.id);
                 return (
                   <tr key={user.id} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
