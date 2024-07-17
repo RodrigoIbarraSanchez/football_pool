@@ -16,7 +16,7 @@ const customStyles = {
     padding: '20px',
     overflow: 'auto',
     marginLeft: '50%',
-    marginTop: '100%'
+    marginTop: '120%'
   },
 };
 
