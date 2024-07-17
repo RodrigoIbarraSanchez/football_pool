@@ -33,7 +33,7 @@ const MatchModal = ({ isModalOpen, closeModal, selectedMatch, participants, curr
       overlayClassName="modal-fondo"
       closeTimeoutMS={200}
     >
-      {selectedMatch && selectedMatch.status === 'FT' || selectedMatch && currentUser.admin && (
+      {selectedMatch && (
         <>
           <div className="prediction-teams">
             <div className="team">
@@ -46,39 +46,47 @@ const MatchModal = ({ isModalOpen, closeModal, selectedMatch, participants, curr
               <img src={selectedMatch.away_team_logo} alt={selectedMatch.away_team} className="team-logo" />
             </div>
           </div>
-          <h3 className="modal-subtitle">Participants and Predictions</h3>
-          <table className="participants-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Player</th>
-                <th>Prediction</th>
-                <th>Points</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedParticipants.map((user, index) => {
-                const prediction = user.predictions.find(p => p.match_id === selectedMatch.id);
-                return (
-                  <tr key={user.id} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
-                    <td>{index + 1}</td>
-                    <td>
-                      <div className="player-info">
-                        {user.profile_picture_url ? (
-                          <img src={user.profile_picture_url} alt={user.first_name} className="profile-picture" />
-                        ) : (
-                          <div className="profile-placeholder">{user.email.charAt(0).toUpperCase()}</div>
-                        )}
-                        {user.first_name}
-                      </div>
-                    </td>
-                    <td>{prediction ? `${prediction.home_team_score} - ${prediction.away_team_score}` : 'N/A'}</td>
-                    <td>{prediction ? prediction.points : 'N/A'}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          {
+            currentUser === 'admin' || selectedMatch.status === 'FT' || selectedMatch.status === '1H' || selectedMatch.status === '2H' ? (
+              <>
+                <h3 className="modal-subtitle">Participants and Predictions</h3>
+                <table className="participants-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Player</th>
+                      <th>Prediction</th>
+                      <th>Points</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sortedParticipants.map((user, index) => {
+                      const prediction = user.predictions.find(p => p.match_id === selectedMatch.id);
+                      return (
+                        <tr key={user.id} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
+                          <td>{index + 1}</td>
+                          <td>
+                            <div className="player-info">
+                              {user.profile_picture_url ? (
+                                <img src={user.profile_picture_url} alt={user.first_name} className="profile-picture" />
+                              ) : (
+                                <div className="profile-placeholder">{user.email.charAt(0).toUpperCase()}</div>
+                              )}
+                              {user.first_name}
+                            </div>
+                          </td>
+                          <td>{prediction ? `${prediction.home_team_score} - ${prediction.away_team_score}` : 'N/A'}</td>
+                          <td>{prediction ? prediction.points : 'N/A'}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </>
+            ) : (
+              <p className="modal-info">Las predicciones dde los participantes se mostrarán cuando el partido haya iniciado.</p>
+            )
+          }
           <button className="close-button" onClick={closeModal}>Cerrar</button>
         </>
       )}
