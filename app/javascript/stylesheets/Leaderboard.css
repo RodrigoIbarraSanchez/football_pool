@@ -55,6 +55,10 @@
   background-color: #cd80324c;
 }
 
+.profile-picture-td {
+  text-align: left!important;
+}
+
 
 @media (max-width: 600px) {
   .leaderboard-table th,

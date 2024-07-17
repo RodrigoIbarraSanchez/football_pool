@@ -63,7 +63,7 @@ const Leaderboard = ({ pool }) => {
             {sortedParticipants.map((participant, index) => (
               <tr key={participant.id} className={`rank-${index + 1}`}>
                 <td>{index + 1} {getRankEmoji(index + 1)}</td>
-                <td>
+                <td className='profile-picture-td'>
                   {participant.profile_picture_url && (
                     <img src={participant.profile_picture_url} alt="Profile" className="profile-picture" />
                   )}
