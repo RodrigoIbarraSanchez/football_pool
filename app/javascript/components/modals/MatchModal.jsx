@@ -8,12 +8,13 @@ const customStyles = {
     left: '50%',
     right: 'auto',
     bottom: 'auto',
-    marginRight: '-95%',
+    marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    width: '85vw',
+    width: '90vw',
     maxWidth: '600px',
     maxHeight: '90vh',
     padding: '20px',
+    overflow: 'auto',
   },
 };
 
