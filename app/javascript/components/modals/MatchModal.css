@@ -32,12 +32,13 @@
   border-radius: 5px;
   color: white;
   display: block;
+  margin-left: auto;
+  margin-right: -45%!important;
+  margin-top: 50%;
   max-height: 620px;
   max-width: 333px;
   outline: none;
   padding: 10px;
-  margin-left: auto;
-  margin-right: -45%!important;
   width: 350px;
 }
 

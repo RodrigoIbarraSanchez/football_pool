@@ -13,8 +13,8 @@ const customStyles = {
 
 Modal.setAppElement('#react-root');
 
-const MatchModal = ({ isModalOpen, closeModal, selectedMatch, participants }) => {
-  console.log(selectedMatch);
+const MatchModal = ({ isModalOpen, closeModal, selectedMatch, participants, currentUser }) => {
+  console.log(currentUser);
   const isLongName = name => name && name.length > 10;
 
   // Ordenar los participantes por puntos de mayor a menor

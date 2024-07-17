@@ -163,6 +163,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser,
         closeModal={closeModal}
         selectedMatch={selectedMatch}
         participants={pool.participants || []}
+        currentUser={currentUser}
       />
     </div>
   );
