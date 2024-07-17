@@ -1,4 +1,4 @@
-.ReactModalPortal > div{
+.ReactModalPortal > div {
   opacity: 0;
 }
 
@@ -6,7 +6,7 @@
   align-items: center;
   display: flex;
   justify-content: center;
-  transition: opacity .2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
   z-index: 999;
 }
 
@@ -32,14 +32,11 @@
   border-radius: 5px;
   color: white;
   display: block;
-  margin-left: auto;
-  margin-right: -45%!important;
-  margin-top: 50%;
-  max-height: 620px;
-  max-width: 333px;
+  max-height: 90vh;
   outline: none;
   padding: 10px;
-  width: 350px;
+  width: 90vw; 
+  max-width: 600px;
 }
 
 .modal-title {
@@ -57,9 +54,11 @@
 .participants-table {
   width: 100%;
   border-collapse: collapse;
+  overflow-y: auto;
 }
 
-.participants-table th, .participants-table td {
+.participants-table th,
+.participants-table td {
   padding: 10px;
   text-align: left;
 }
