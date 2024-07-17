@@ -64,8 +64,10 @@ const Leaderboard = ({ pool }) => {
               <tr key={participant.id} className={`rank-${index + 1}`}>
                 <td>{index + 1} {getRankEmoji(index + 1)}</td>
                 <td className='profile-picture-td'>
-                  {participant.profile_picture_url && (
-                    <img src={participant.profile_picture_url} alt="Profile" className="profile-picture" />
+                  {participant.profile_picture_url !== null ? (
+                    <img src={user.profile_picture_url} alt={user.first_name} className="profile-picture" />
+                  ) : (
+                    <div className="profilez-placeholder">{user.email.charAt(0).toUpperCase()}</div>
                   )}
                   {participant.username}
                 </td>

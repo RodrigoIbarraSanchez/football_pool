@@ -78,7 +78,7 @@ const MatchModal = ({ isModalOpen, closeModal, selectedMatch, participants, curr
                           <td>{index + 1}</td>
                           <td>
                             <div className="player-info">
-                              {user.profile_picture_url ? (
+                              {user.profile_picture_url !== null ? (
                                 <img src={user.profile_picture_url} alt={user.first_name} className="profile-picture" />
                               ) : (
                                 <div className="profilez-placeholder">{user.email.charAt(0).toUpperCase()}</div>
