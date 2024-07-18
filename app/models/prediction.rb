@@ -5,6 +5,14 @@ class Prediction < ApplicationRecord
 
   before_save :calculate_points
 
+  validate :match_not_started, on: [:create, :update]
+
+  def match_not_started
+    if match.status != "NS"
+      errors.add(:base, "No se pueden guardar predicciones para partidos que ya han comenzado.")
+    end
+  end
+
   def calculate_points
     if self.match.status == 'FT'
       if self.home_team_score == self.match.home_team_score && self.away_team_score == self.match.away_team_score

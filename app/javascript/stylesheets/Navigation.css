@@ -14,3 +14,50 @@
 .navigation a:hover {
   text-decoration: underline;
 }
+
+.flash {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 5px;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  animation: fadeIn 0.5s;
+  background-color: #333;
+}
+
+.flash.notice {
+  background-color: #4caf50; /* Verde para notice */
+}
+
+.flash.alert {
+  background-color: #f44336; /* Rojo para alert */
+}
+
+.flash .flash-message {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.flash .flash-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.flash .flash-close:hover {
+  color: #bbb;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
