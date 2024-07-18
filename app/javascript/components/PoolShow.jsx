@@ -60,7 +60,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser,
                   const prediction = currentUser.predictions.find(p => p.match_id === match.id);
                   if (!prediction) return null;
                   return (
-                    <li key={match.id} className="prediction-item" onClick={() => openModal(match)}>
+                    <li key={match.id} className="prediction-item">
                       <div className="prediction-teams">
                         <div className="team">
                           <img src={match.home_team_logo} alt={match.home_team} className="team-logo" />
@@ -75,7 +75,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, notice, currentUser,
                       <span className={(match.status === '1H' || match.status === '2H') ? 'elapsed-status-live' : 'elapsed-status'}>{
                         match.status === 'NS' ? 'NS' : match.status === 'FT' ? 'FT' : `${match.elapsed}'`
                       } </span>
-                      <div className="prediction-container">
+                      <div className="prediction-container" onClick={() => openModal(match)}>
                         <div className="prediction-details">
                           <span className={(match.status === 'FT' ? 'detail-score-ft': 'detail-score')}>{prediction ? prediction.home_team_score : '-'} - {prediction ? prediction.away_team_score : '-'}</span>
                           {match.status === 'FT' && prediction && <span className={(prediction.points === 5 || prediction.points === 2 ? 'detail-points-5' : 'detail-points')}>+{prediction.points}</span>}
