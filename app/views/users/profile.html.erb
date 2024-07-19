@@ -1,0 +1,14 @@
+<% props = {
+  currentUser: {
+    id: @user.id,
+    first_name: @user.first_name,
+    last_name: @user.last_name,
+    email: @user.email,
+    username: @user.username,
+    admin: @user.admin?,
+    profile_picture_url: @user.profile_picture.attached? ? url_for(@user.profile_picture) : nil
+  }
+}.to_json %>
+
+<div id="react-root" data-props="<%= props %>"></div>
+<%= javascript_pack_tag 'application' %>

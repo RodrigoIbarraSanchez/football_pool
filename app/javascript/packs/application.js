@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PoolsIndex from '../components/PoolsIndex';
 import PoolShow from '../components/PoolShow';
 import Leaderboard from '../components/Leaderboard';
+import UserProfile from '../components/UserProfile';
+import UserEditProfile from '../components/UserEditProfile';
 
 document.addEventListener('DOMContentLoaded', () => {
   const rootElement = document.getElementById('react-root');
@@ -18,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <Route path="/pools/:id" element={<PoolShow {...props} />} />
           <Route path="/pools/:id/leaderboard" element={<Leaderboard pool={props.pool} />} />
           <Route path="/" element={<PoolsIndex {...props} />} />
+          <Route path='/profile' element={<UserProfile user={props.currentUser} />} />
+          <Route path="/profile/edit" element={<UserEditProfile user={props.currentUser} csrfToken={props.csrfToken} />} />
         </Routes>
       </Router>
     );

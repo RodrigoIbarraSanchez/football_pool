@@ -1,26 +1,13 @@
 import React from 'react';
+import Navbar from './Navbar'; // Ajusta la ruta según sea necesario
 import '../stylesheets/PoolsIndex.css';
 
 const PoolsIndex = ({ pools, notice, userSignedIn, currentUser, csrfToken }) => {
   return (
     <>
-      {userSignedIn ? (
-        <div className="top-bar">
-          <form action="/users/sign_out" method="post">
-            <input type="hidden" name="_method" value="delete" />
-            <input type="hidden" name="authenticity_token" value={csrfToken} />
-            <button type="submit" className="logout-link">Cerrar Sesión</button>
-          </form>
-        </div>
-      ) : (
-        <div className="top-bar">
-          <a href="/users/sign_in" className="login-link">Iniciar Sesión</a>
-          <a href="/users/sign_up" className="signup-link">Registrarse</a>
-        </div>
-      )}
+      <Navbar userSignedIn={userSignedIn} csrfToken={csrfToken} />
       <div className="container">
         {notice && <p className="notice">{notice}</p>}
-
         
         <h1 className="title">Quinielas</h1>
         
@@ -29,12 +16,7 @@ const PoolsIndex = ({ pools, notice, userSignedIn, currentUser, csrfToken }) => 
             <div key={pool.id} className="pool-item">
               <p><strong>Nombre:</strong> {pool.title}</p>
               <p><strong>Descripción:</strong> {pool.description}</p>
-              {/* <p><strong>Raffle winner:</strong> {pool.raffle_winner}</p> */}
-              {/* <p><strong>Iniciada?:</strong> {pool.isStarted ? 'Yes' : 'No'}</p> */}
-              {/* <p><strong>Is finished:</strong> {pool.isFinished ? 'Yes' : 'No'}</p> */}
               <p><strong>Premio:</strong> {pool.prize}</p>
-              {/* <p><strong>User:</strong> {pool.user_id}</p> */}
-              {/* <p><strong>Created at:</strong> {new Date(pool.created_at).toLocaleString()}</p> */}
               <p><a href={`/pools/${pool.id}`} className="view-pool-link">Ver Quiniela</a></p>
             </div>
           ))}

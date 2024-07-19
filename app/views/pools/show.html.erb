@@ -41,9 +41,9 @@
     }
   },
   notice: flash[:notice],
-  userIsCreator: @user_is_creator,
-  userIsParticipant: @user_is_participant,
-  currentUser: {
+  userIsCreator: @user_is_creator || false,
+  userIsParticipant: @user_is_participant || false,
+  currentUser: current_user ? {
     id: current_user.id,
     predictions: current_user.predictions.where(pool: @pool).map { |prediction| { 
       id: prediction.id,
@@ -55,7 +55,7 @@
       away_team_logo: prediction.match.away_team_logo,
     } },
     admin: current_user.admin?
-  },
+  } : nil,
   csrfToken: form_authenticity_token
 }.to_json %>
 

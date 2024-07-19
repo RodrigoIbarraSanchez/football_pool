@@ -20,8 +20,6 @@ const customStyles = {
   },
 };
 
-Modal.setAppElement('#react-root');
-
 const MatchModal = ({ isModalOpen, closeModal, selectedMatch, participants, currentUser }) => {
   const isLongName = name => name && name.length > 10;
 

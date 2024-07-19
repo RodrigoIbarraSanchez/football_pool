@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
-  
+
   resources :pools do
     member do
       match 'join', via: [:get, :post]
@@ -22,4 +22,9 @@ Rails.application.routes.draw do
   root 'pages#home'
   
   get 'matches/current_round', to: 'matches#current_round'
+  get '/profile', to: 'users#profile', as: 'user_profile'
+  get '/profile/edit', to: 'users#edit', as: 'edit_user_profile'
+  get '/users/check_username', to: 'users#check_username'
+
+  patch '/profile', to: 'users#update', as: 'update_user_profile'
 end
