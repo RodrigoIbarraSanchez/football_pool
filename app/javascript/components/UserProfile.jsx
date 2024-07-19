@@ -14,9 +14,9 @@ const UserProfile = ({ user, userSignedIn, csrfToken }) => {
     <>
       <Navbar userSignedIn={userSignedIn} csrfToken={csrfToken} />
       <div className="user-profile">
-        <div className="profile-picture-container">
+        <div className="profile-profile-picture-container">
           {user.profile_picture_url ? (
-            <img src={user.profile_picture_url} alt="Profile Picture" className="profile-picture" />
+            <img src={user.profile_picture_url} alt="Profile Picture" className="profile-profile-picture" />
           ) : (
             <div className="profile-placeholder">{user.first_name.charAt(0).toUpperCase()}</div>
           )}
