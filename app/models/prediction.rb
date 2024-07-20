@@ -3,11 +3,11 @@ class Prediction < ApplicationRecord
   belongs_to :match
   belongs_to :pool
 
-  before_save :calculate_points, unless: :skip_points_calculation
+  before_save :calculate_points, unless: :skip_validation
 
-  validate :match_not_started, on: [:create, :update]
+  validate :match_not_started, on: [:create, :update], unless: :skip_validation
 
-  attr_accessor :skip_points_calculation
+  attr_accessor :skip_validation
 
   def match_not_started
     return if user.admin?
@@ -17,7 +17,6 @@ class Prediction < ApplicationRecord
   end
 
   def calculate_points
-    Rails.logger.debug "Calculating points for Prediction ID: #{self.id}, Match Status: #{self.match.status}"
     if self.match.status == 'FT'
       if self.home_team_score == self.match.home_team_score && self.away_team_score == self.match.away_team_score
         self.points = 5
@@ -29,18 +28,16 @@ class Prediction < ApplicationRecord
     else
       self.points = 0
     end
-    Rails.logger.debug "Prediction ID: #{self.id}, Calculated Points: #{self.points}"
   end
 
   def self.recalculate_points_for_match(match)
-    Rails.logger.debug "Recalculating points for match ID: #{match.id}"
     match.predictions.each do |prediction|
-      prediction.skip_points_calculation = true
+      prediction.skip_validation = true
       prediction.calculate_points
-      if prediction.save
-        Rails.logger.debug "Updated points for prediction ID: #{prediction.id}: #{prediction.points}"
+      if prediction.save(validate: false)
+        Rails.logger.debug "Updated points for prediction ID: #{prediction.id} - Points: #{prediction.points}"
       else
-        Rails.logger.error "Failed to update points for prediction ID: #{prediction.id}: #{prediction.errors.full_messages.join(', ')}"
+        Rails.logger.error "Failed to update points for prediction ID: #{prediction.id} - Errors: #{prediction.errors.full_messages.join(', ')}"
       end
     end
   end
