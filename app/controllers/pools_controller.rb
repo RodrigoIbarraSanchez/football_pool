@@ -18,7 +18,7 @@ class PoolsController < ApplicationController
   
     # Actualizar partidos en vivo y resultados finales
     @pool.matches.each do |match|
-      if match.status != "FT"
+      if match.status != "Match Finished"
         api_service.update_fixture(match.fixture_id)
         match.reload
       end
@@ -29,8 +29,8 @@ class PoolsController < ApplicationController
   
     @pool.reload
     @matches = @pool.matches
-    @user_is_creator = current_user == @pool.user if current_user
-    @user_is_participant = @pool.users.include?(current_user) if current_user
+    @user_is_creator = current_user == @pool.user
+    @user_is_participant = @pool.users.include?(current_user)
   
     participants = @pool.users.includes(:predictions).map do |user|
       {
@@ -48,21 +48,6 @@ class PoolsController < ApplicationController
     end
   
     Rails.logger.debug "Participants: #{participants}"
-  
-    current_user_data = if current_user
-                          {
-                            id: current_user.id,
-                            predictions: current_user.predictions.map do |p|
-                              {
-                                match_id: p.match_id,
-                                home_team_score: p.home_team_score,
-                                away_team_score: p.away_team_score
-                              }
-                            end
-                          }
-                        else
-                          {}
-                        end
   
     props = {
       pool: {
@@ -92,15 +77,24 @@ class PoolsController < ApplicationController
         end,
         participants: participants
       },
-      userIsCreator: @user_is_creator || false,
-      userIsParticipant: @user_is_participant || false,
-      currentUser: current_user_data
+      userIsCreator: @user_is_creator,
+      userIsParticipant: @user_is_participant,
+      currentUser: {
+        id: current_user.id,
+        predictions: current_user.predictions.map do |p|
+          {
+            match_id: p.match_id,
+            home_team_score: p.home_team_score,
+            away_team_score: p.away_team_score
+          }
+        end
+      }
     }.to_json
   
     Rails.logger.debug "Props: #{props}"
   
     @props = props
-  end  
+  end 
 
   def new
     @pool = Pool.new
