@@ -3,6 +3,7 @@ import '../stylesheets/Navbar.css';
 import { Link } from 'react-router-dom';
 
 const Navbar = ({ userSignedIn, csrfToken }) => {
+  console.log("Navbar component props:", userSignedIn);
   return (
     <nav className="navbar">
       <div className="navbar-brand">

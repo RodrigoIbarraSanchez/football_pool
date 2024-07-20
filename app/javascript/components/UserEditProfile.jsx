@@ -90,6 +90,7 @@ const UserEditProfile = ({ user }) => {
           />
         </div>
         <button type="submit">Save Changes</button>
+        <button type="button" onClick={() => window.location.href = '/profile'}>Cancel</button>
       </form>
     </div>
   );

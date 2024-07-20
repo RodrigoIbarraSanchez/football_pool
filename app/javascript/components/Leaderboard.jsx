@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Navigation from './Navigation';
 import '../stylesheets/Leaderboard.css';
 import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
 
-const Leaderboard = ({ pool }) => {
+const Leaderboard = ({ pool, userSignedIn, csrfToken }) => {
   const [participants, setParticipants] = useState([]);
 
   useEffect(() => {
@@ -45,6 +46,7 @@ const Leaderboard = ({ pool }) => {
 
   return (
     <>
+      <Navbar userSignedIn={userSignedIn} csrfToken={csrfToken} />
       <div className="tabs">
         <Link to={`/pools/${pool.id}`} className={`tab ${location.pathname === `/pools/${pool.id}` ? 'active' : ''}`}>Partidos</Link>
         <Link to={`/pools/${pool.id}/leaderboard`} className={`tab ${location.pathname === `/pools/${pool.id}/leaderboard` ? 'active' : ''}`}>Leaderboard</Link>

@@ -41,8 +41,6 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
       return (pool.matches || []).find(match => match.id === id);
     });
 
-    console.log('pool:', pool);
-
   return (
     <>
       <Navbar userSignedIn={userSignedIn} csrfToken={csrfToken} />

@@ -56,6 +56,7 @@
     } },
     admin: current_user.admin?
   } : nil,
+  userSignedIn: user_signed_in?,
   csrfToken: form_authenticity_token
 }.to_json %>
 

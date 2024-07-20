@@ -7,6 +7,7 @@
     username: @user.username,
     profile_picture_url: @user.profile_picture.attached? ? url_for(@user.profile_picture) : nil
   },
+  userSignedIn: user_signed_in?,
   csrfToken: form_authenticity_token
 }.to_json %>
 
