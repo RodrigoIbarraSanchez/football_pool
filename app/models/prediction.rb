@@ -8,6 +8,7 @@ class Prediction < ApplicationRecord
   validate :match_not_started, on: [:create, :update]
 
   def match_not_started
+    return if user.admin? 
     if match.status != "NS"
       errors.add(:base, "No se pueden guardar predicciones para partidos que ya han comenzado.")
     end
