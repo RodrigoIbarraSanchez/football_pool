@@ -3,9 +3,11 @@ class Prediction < ApplicationRecord
   belongs_to :match
   belongs_to :pool
 
-  before_save :calculate_points
+  before_save :calculate_points, unless: :skip_points_calculation
 
   validate :match_not_started, on: [:create, :update]
+
+  attr_accessor :skip_points_calculation
 
   def match_not_started
     return if user.admin?
@@ -33,6 +35,7 @@ class Prediction < ApplicationRecord
   def self.recalculate_points_for_match(match)
     Rails.logger.debug "Recalculating points for match ID: #{match.id}"
     match.predictions.each do |prediction|
+      prediction.skip_points_calculation = true
       prediction.calculate_points
       if prediction.save
         Rails.logger.debug "Updated points for prediction ID: #{prediction.id}: #{prediction.points}"
