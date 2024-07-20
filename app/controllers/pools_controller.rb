@@ -18,7 +18,7 @@ class PoolsController < ApplicationController
   
     # Actualizar partidos en vivo y resultados finales
     @pool.matches.each do |match|
-      if match.status != "Match Finished"
+      if match.status != "FT"
         api_service.update_fixture(match.fixture_id)
         match.reload
       end
