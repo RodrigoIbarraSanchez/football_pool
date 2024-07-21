@@ -177,6 +177,17 @@ body {
   z-index: 0;
 }
 
+.detail-points-3 {
+  color: #f6ff00;
+  text-align: center;
+  background: #6d706d;
+  padding: 3px 5px;
+  border-radius: 0 5px 5px 0;
+  font-weight: bold;
+  margin-left: -14px;
+  z-index: 0;
+}
+
 .detail-points {
   color: #cfd3cf;
   text-align: center;
