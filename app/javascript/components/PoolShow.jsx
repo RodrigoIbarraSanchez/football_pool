@@ -35,11 +35,19 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
     setEditingPrediction(null);
   };
 
+  // Función de comparación para ordenar partidos por fecha
+  const compareMatchesByDate = (a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    return dateA - dateB;
+  };
+
   // Eliminar duplicados en el array de matches
   const uniqueMatches = Array.from(new Set((pool.matches || []).map(match => match.id)))
     .map(id => {
       return (pool.matches || []).find(match => match.id === id);
-    });
+    })
+    .sort(compareMatchesByDate); // Ordenar por fecha
 
   return (
     <>
