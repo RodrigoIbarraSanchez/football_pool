@@ -115,7 +115,15 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
                         <div className="prediction-container" onClick={() => openModal(match)}  >
                           <div className="prediction-details">
                             <span className={(match.status === 'FT' ? 'detail-score-ft': 'detail-score')}>{prediction ? prediction.home_team_score : '-'} - {prediction ? prediction.away_team_score : '-'}</span>
-                            {match.status === 'FT' && prediction && <span className={(prediction.points === 5 || prediction.points === 2 ? 'detail-points-5' : 'detail-points')}>+{prediction.points}</span>}
+                            {match.status === 'FT' && prediction && (
+                              <span className={
+                                prediction.points === 5 
+                                  ? 'detail-points-5' 
+                                  : (prediction.points === 3 ? 'detail-points-3' : 'detail-points')
+                              }>
+                                +{prediction.points}
+                              </span>
+                            )}
                           </div>
                         </div>
                         {match.status === 'NS' && (
