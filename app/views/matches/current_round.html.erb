@@ -4,9 +4,9 @@
   <ul>
     <% @matches.each do |match| %>
       <li>
-        <strong><%= match.dig("teams", "home", "name") %> vs <%= match.dig("teams", "away", "name") %></strong><br>
-        Date: <%= match.dig("fixture", "date") %><br>
-        Venue: <%= match.dig("fixture", "venue", "name") %>, <%= match.dig("fixture", "venue", "city") %>
+        <strong><%= match.date.in_time_zone('America/Mexico_City').strftime("%d %b %Y %H:%M").dig("teams", "home", "name") %> vs <%= match.date.in_time_zone('America/Mexico_City').strftime("%d %b %Y %H:%M").dig("teams", "away", "name") %></strong><br>
+        Date: <%= match.date.in_time_zone('America/Mexico_City').strftime("%d %b %Y %H:%M").dig("fixture", "date") %><br>
+        Venue: <%= match.date.in_time_zone('America/Mexico_City').strftime("%d %b %Y %H:%M").dig("fixture", "venue", "name") %>, <%= match.date.in_time_zone('America/Mexico_City').strftime("%d %b %Y %H:%M").dig("fixture", "venue", "city") %>
       </li>
     <% end %>
   </ul>

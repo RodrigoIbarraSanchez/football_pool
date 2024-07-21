@@ -118,7 +118,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
                           </div>
                         </div>
                         <span className={(match.status === '1H' || match.status === '2H') ? 'elapsed-status-live' : 'elapsed-status'}>{
-                          match.status === 'NS' ? 'NS' : match.status === 'FT' ? 'FT' : `${match.elapsed}'`
+                          match.status === 'NS' ? match.date.split('T')[1].slice(0, 5) : match.status === 'FT' ? 'FT' : `${match.elapsed}'`
                         } </span>
                         <div className="prediction-container" onClick={() => openModal(match)}  >
                           <div className="prediction-details">
@@ -200,7 +200,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
                       </div>
                     </div>
                     <span className={(match.status === '1H' || match.status === '2H') ? 'elapsed-status-live' : 'elapsed-status'}>{
-                      match.status === 'NS' ? 'NS' : match.status === 'FT' ? 'FT' : `${match.elapsed}'`
+                      match.status === 'NS' ? match.date.split('T')[1].slice(0, 5) : match.status === 'FT' ? 'FT' : `${match.elapsed}`
                     } </span>
                   </li>
                 ))}

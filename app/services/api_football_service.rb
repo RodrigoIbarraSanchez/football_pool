@@ -12,11 +12,12 @@ class ApiFootballService
   end
 
   def fixtures(season, from, to, league)
-    self.class.get("/fixtures", headers: @headers, query: { season: season, from: from, to: to, league: league })
+    self.class.get("/fixtures", headers: @headers, query: { season: season, from: from, to: to, league: league, timezone: "America/Mexico_City" })
   end
 
   def save_fixtures(season, from, to, league)
     response = fixtures(season, from, to, league)
+    Rails.logger.debug "Response: #{response.inspect}"
     if response["response"].present?
       response["response"].each do |fixture_data|
         Match.find_or_create_by!(fixture_id: fixture_data["fixture"]["id"]) do |match|
@@ -24,7 +25,7 @@ class ApiFootballService
           match.home_team_logo = fixture_data["teams"]["home"]["logo"]
           match.away_team = fixture_data["teams"]["away"]["name"]
           match.away_team_logo = fixture_data["teams"]["away"]["logo"]
-          match.date = fixture_data["fixture"]["date"]
+          match.date = fixture_data["fixture"]["date"].in_time_zone('America/Mexico_City')
           match.venue = fixture_data["fixture"]["venue"]["name"]
           match.city = fixture_data["fixture"]["venue"]["city"]
           match.round = fixture_data["league"]["round"]
@@ -45,7 +46,8 @@ class ApiFootballService
           home_team_score: fixture_data["goals"]["home"],
           away_team_score: fixture_data["goals"]["away"],
           status: fixture_data["fixture"]["status"]["short"],
-          elapsed: fixture_data["fixture"]["status"]["elapsed"]
+          elapsed: fixture_data["fixture"]["status"]["elapsed"],
+          date: fixture_data["fixture"]["date"].in_time_zone('America/Mexico_City')
         )
         Rails.logger.debug "Match updated: #{match.inspect}"
 
@@ -71,7 +73,8 @@ class ApiFootballService
           status: fixture_data["fixture"]["status"]["short"],
           elapsed: fixture_data["fixture"]["status"]["elapsed"],
           home_team_logo: fixture_data["teams"]["home"]["logo"],
-          away_team_logo: fixture_data["teams"]["away"]["logo"]
+          away_team_logo: fixture_data["teams"]["away"]["logo"],
+          date: fixture_data["fixture"]["date"].in_time_zone('America/Mexico_City')
         )
         # Recalcula los puntos para todas las predicciones de este partido
         Prediction.recalculate_points_for_match(match)
