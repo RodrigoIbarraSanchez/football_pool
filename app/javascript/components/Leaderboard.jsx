@@ -69,7 +69,7 @@ const Leaderboard = ({ pool, userSignedIn, csrfToken }) => {
                   {participant.profile_picture_url !== null ? (
                     <img src={participant.profile_picture_url} alt={participant.first_name} className="profile-picture" />
                   ) : (
-                    <div className="profilez-placeholder">{participant.first_name.charAt(0).toUpperCase()}</div>
+                    <div className="profile-placeholder">{participant.first_name.charAt(0).toUpperCase()}</div>
                   )}
                   {participant.username}
                 </td>

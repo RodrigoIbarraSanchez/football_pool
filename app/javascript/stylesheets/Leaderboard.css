@@ -57,6 +57,8 @@
 
 .profile-picture-td {
   text-align: left!important;
+  display: flex;
+  align-items: center;
 }
 
 
@@ -64,7 +66,8 @@
   .leaderboard-table th,
   .leaderboard-table td {
     padding: 8px;
-    font-size: 14px;
+    font-size: 20px;
+    font-weight: bold;
   }
 }
 

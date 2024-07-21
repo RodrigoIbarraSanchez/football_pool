@@ -57,6 +57,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_163605) do
     t.string "away_team_logo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "home_team_score"
+    t.integer "away_team_score"
   end
 
   create_table "matches_pools", id: false, force: :cascade do |t|
