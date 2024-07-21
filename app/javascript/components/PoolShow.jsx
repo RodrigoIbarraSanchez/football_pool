@@ -39,7 +39,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
   const compareMatchesByDate = (a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
-    return dateB - dateA;
+    return dateA - dateB;
   };
 
   // Eliminar duplicados en el array de matches
@@ -48,6 +48,14 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
       return (pool.matches || []).find(match => match.id === id);
     })
     .sort(compareMatchesByDate); // Ordenar por fecha
+
+  // Formato de fecha y hora para mejor UX
+  const formatTime = (dateString) => {
+    const date = new Date(dateString);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
 
   return (
     <>
@@ -118,7 +126,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
                           </div>
                         </div>
                         <span className={(match.status === '1H' || match.status === '2H') ? 'elapsed-status-live' : 'elapsed-status'}>{
-                          match.status === 'NS' ? match.date.split('T')[1].slice(0, 5) : match.status === 'FT' ? 'FT' : `${match.elapsed}'`
+                          match.status === 'NS' ? formatTime(match.date) : match.status === 'FT' ? 'FT' : `${match.elapsed}'`
                         } </span>
                         <div className="prediction-container" onClick={() => openModal(match)}  >
                           <div className="prediction-details">
@@ -200,7 +208,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
                       </div>
                     </div>
                     <span className={(match.status === '1H' || match.status === '2H') ? 'elapsed-status-live' : 'elapsed-status'}>{
-                      match.status === 'NS' ? match.date.split('T')[1].slice(0, 5) : match.status === 'FT' ? 'FT' : `${match.elapsed}`
+                      match.status === 'NS' ? formatTime(match.date) : match.status === 'FT' ? 'FT' : `${match.elapsed}`
                     } </span>
                   </li>
                 ))}
