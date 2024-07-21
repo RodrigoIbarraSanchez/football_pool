@@ -82,23 +82,26 @@
 }
 
 .profile-picture {
-  width: 30px;
-  height: 30px;
+  width: 40px; /* Ajusta el tamaño según tus necesidades */
+  height: 40px; /* Ajusta el tamaño según tus necesidades */
   border-radius: 50%;
-  margin-right: 10px;
+  object-fit: cover;
+  margin-right: 10px; /* Espacio entre la imagen y el nombre del usuario */
 }
 
+/* Estilos para el contenedor de placeholder de perfil */
 .profile-placeholder {
-  width: 30px;
-  height: 30px;
+  width: 40px; /* Ajusta el tamaño según tus necesidades */
+  height: 40px; /* Ajusta el tamaño según tus necesidades */
   border-radius: 50%;
-  background-color: #777;
+  background-color: #ccc; /* Color de fondo del placeholder */
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 10px;
+  color: #fff; /* Color del texto */
+  font-size: 20px; /* Tamaño de la letra */
   font-weight: bold;
-  color: #fff;
+  margin-right: 10px; /* Espacio entre el placeholder y el nombre del usuario */
 }
 
 .close-button {

@@ -14,22 +14,27 @@
   margin-bottom: 20px;
 }
 
-.profile-profile-picture {
-  width: 100%;
-  height: 100%;
+.profile-picture {
+  width: 40px; /* Ajusta el tamaño según tus necesidades */
+  height: 40px; /* Ajusta el tamaño según tus necesidades */
+  border-radius: 50%;
   object-fit: cover;
+  margin-right: 10px; /* Espacio entre la imagen y el nombre del usuario */
 }
 
+/* Estilos para el contenedor de placeholder de perfil */
 .profile-placeholder {
+  width: 40px; /* Ajusta el tamaño según tus necesidades */
+  height: 40px; /* Ajusta el tamaño según tus necesidades */
+  border-radius: 50%;
+  background-color: #ccc; /* Color de fondo del placeholder */
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
-  background-color: #777;
-  color: white;
-  font-size: 50px;
+  color: #fff; /* Color del texto */
+  font-size: 20px; /* Tamaño de la letra */
   font-weight: bold;
+  margin-right: 10px; /* Espacio entre el placeholder y el nombre del usuario */
 }
 
 .edit-profile-button {
