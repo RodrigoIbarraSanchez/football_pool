@@ -108,6 +108,7 @@ class PoolsController < ApplicationController
 
   def new
     @pool = Pool.new
+    save_current_round_matches
     @matches = get_current_round_matches
     Rails.logger.debug "Matches loaded: #{@matches.inspect}" # Línea de depuración
   end
@@ -274,20 +275,20 @@ class PoolsController < ApplicationController
       today = Date.today
       start_of_week = today.beginning_of_week(:monday)
       end_of_week = today.end_of_week(:sunday)
-      league = 772
-      
+      league = params[:league_id] || 772  # Obtener el ID de la liga de los parámetros de la URL
+    
       logger.debug "Fetching fixtures from #{start_of_week} to #{end_of_week} for league #{league}"
-      
+    
       response = service.fixtures(season, start_of_week, end_of_week, league)
       logger.debug "API response: #{response.inspect}"
-      
+    
       if response.is_a?(Hash) && response["response"].present?
         fixture_ids = response["response"]
                       .select { |match| match.dig("fixture", "status", "short") == "NS" }
                       .map { |match| match.dig("fixture", "id").to_i }
-        
+    
         logger.debug "Fixture IDs for matches with status 'NS': #{fixture_ids}"
-        
+    
         matches = Match.where(fixture_id: fixture_ids)
                        .where(date: start_of_week..end_of_week)  # Filtra los partidos de la semana actual
         logger.debug "Matches found: #{matches.pluck(:fixture_id)}"
@@ -300,11 +301,14 @@ class PoolsController < ApplicationController
 
     def save_current_round_matches
       logger.debug "Entering save_current_round_matches"
-      
+    
       season = 2024
       from = Date.today
       to = from + 7.days
-      league = 772
+      league = params[:league_id] || 772  # Obtener el ID de la liga de los parámetros de la URL
+    
+      # Eliminar partidos antiguos de la liga especificada
+      Match.where(league_id: league).where('date < ?', from).destroy_all
     
       api_service = ApiFootballService.new
       response = api_service.save_fixtures(season, from, to, league)
@@ -336,9 +340,9 @@ class PoolsController < ApplicationController
       else
         logger.error "API response was nil or did not contain 'response'"
       end
-      
+    
       logger.debug "Exiting save_current_round_matches"
-    end       
+    end           
 
     def load_matches
       @matches = Match.all
