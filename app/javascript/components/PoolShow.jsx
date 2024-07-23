@@ -39,7 +39,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
   const compareMatchesByDate = (a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
-    return dateB - dateA;
+    return dateA - dateB;
   };
 
   // Eliminar duplicados en el array de matches
