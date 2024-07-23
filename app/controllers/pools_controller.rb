@@ -61,7 +61,9 @@ class PoolsController < ApplicationController
                               {
                                 match_id: p.match_id,
                                 home_team_score: p.home_team_score,
-                                away_team_score: p.away_team_score
+                                away_team_score: p.away_team_score,
+                                points: p.points,
+                                pool_id: p.pool_id
                               }
                             end
                           }
@@ -208,6 +210,7 @@ class PoolsController < ApplicationController
                   home_team_score: prediction.home_team_score,
                   away_team_score: prediction.away_team_score,
                   points: prediction.points,
+                  pool_id: prediction.pool_id
                 }
               end
             }
@@ -240,6 +243,7 @@ class PoolsController < ApplicationController
                   home_team_score: prediction.home_team_score,
                   away_team_score: prediction.away_team_score,
                   points: prediction.points,
+                  pool_id: prediction.pool_id
                 }
               end
             }
