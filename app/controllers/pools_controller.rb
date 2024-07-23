@@ -40,12 +40,13 @@ class PoolsController < ApplicationController
       {
         id: user.id,
         email: user.email,
-        predictions: user.predictions.where(pool: @pool).map do |prediction|
+        predictions: user.predictions.where(pool_id: @pool.id).map do |prediction|
           {
             match_id: prediction.match_id,
             home_team_score: prediction.home_team_score,
             away_team_score: prediction.away_team_score,
-            points: prediction.points
+            points: prediction.points,
+            pool_id: prediction.pool_id
           }
         end
       }
@@ -56,7 +57,7 @@ class PoolsController < ApplicationController
     current_user_data = if current_user
                           {
                             id: current_user.id,
-                            predictions: current_user.predictions.where(pool: @pool).map do |p|
+                            predictions: current_user.predictions.where(pool_id: @pool.id).map do |p|
                               {
                                 match_id: p.match_id,
                                 home_team_score: p.home_team_score,

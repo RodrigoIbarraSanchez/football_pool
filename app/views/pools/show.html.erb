@@ -30,7 +30,7 @@
         email: user.email,
         first_name: user.first_name,
         profile_picture_url: user.profile_picture.attached? ? url_for(user.profile_picture) : nil,
-        predictions: user.predictions.where(pool: @pool).map { |prediction| 
+        predictions: user.predictions.where(pool_id == @pool.id).map { |prediction|
           { 
             match_id: prediction.match_id, 
             home_team_score: prediction.home_team_score, 
@@ -46,7 +46,7 @@
   userIsParticipant: @user_is_participant || false,
   currentUser: current_user ? {
     id: current_user.id,
-    predictions: current_user.predictions.where(pool: @pool).map { |prediction| { 
+    predictions: current_user.predictions.where(pool_id == @pool.id).map { |prediction| {
       id: prediction.id,
       match_id: prediction.match_id, 
       home_team_score: prediction.home_team_score, 
