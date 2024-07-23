@@ -110,7 +110,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
                 </div>
                 <ul className="predictions-list">
                   {uniqueMatches.map(match => {
-                    const prediction = currentUser.predictions.find(p => p.match_id === match.id && p.pool_id === pool.id);
+                    const prediction = currentUser.predictions.find(p => p.match_id === match.id);
                     if (!prediction) return null;
                     return (
                       <li key={match.id} className="prediction-item">
