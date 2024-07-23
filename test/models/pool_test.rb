@@ -8,6 +8,7 @@
 #  raffle_winner :string
 #  isStarted     :boolean
 #  isFinished    :boolean
+#  isPublic      :boolean
 #  prize         :string
 #  user_id       :integer          not null
 #  created_at    :datetime         not null

@@ -15,6 +15,7 @@ class PagesController < ApplicationController
         raffle_winner: pool.raffle_winner,
         isStarted: pool.isStarted,
         isFinished: pool.isFinished,
+        isPublic: pool.isPublic,
         prize: pool.prize
       } },
       notice: @notice,

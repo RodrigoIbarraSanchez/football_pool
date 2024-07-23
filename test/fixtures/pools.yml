@@ -8,6 +8,7 @@
 #  raffle_winner :string
 #  isStarted     :boolean
 #  isFinished    :boolean
+# isPublic       :boolean
 #  prize         :string
 #  user_id       :integer          not null
 #  created_at    :datetime         not null
@@ -20,6 +21,7 @@ one:
   raffle_winner: MyString
   isStarted: false
   isFinished: false
+  isPublic: false
   prize: MyString
   user: one
 
@@ -29,5 +31,6 @@ two:
   raffle_winner: MyString
   isStarted: false
   isFinished: false
+  isPublic: false
   prize: MyString
   user: two

@@ -17,7 +17,7 @@ class PoolsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create pool" do
     assert_difference("Pool.count") do
-      post pools_url, params: { pool: { description: @pool.description, isFinished: @pool.isFinished, isStarted: @pool.isStarted, prize: @pool.prize, raffle_winner: @pool.raffle_winner, title: @pool.title, user_id: @pool.user_id } }
+      post pools_url, params: { pool: { description: @pool.description, isFinished: @pool.isFinished, isPublic: pool.isPublic, isStarted: @pool.isStarted, prize: @pool.prize, raffle_winner: @pool.raffle_winner, title: @pool.title, user_id: @pool.user_id } }
     end
 
     assert_redirected_to pool_url(Pool.last)
@@ -34,7 +34,7 @@ class PoolsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update pool" do
-    patch pool_url(@pool), params: { pool: { description: @pool.description, isFinished: @pool.isFinished, isStarted: @pool.isStarted, prize: @pool.prize, raffle_winner: @pool.raffle_winner, title: @pool.title, user_id: @pool.user_id } }
+    patch pool_url(@pool), params: { pool: { description: @pool.description, isFinished: @pool.isFinished, isPublic: pool.isPublic, isStarted: @pool.isStarted, prize: @pool.prize, raffle_winner: @pool.raffle_winner, title: @pool.title, user_id: @pool.user_id } }
     assert_redirected_to pool_url(@pool)
   end
 

@@ -76,6 +76,7 @@ class PoolsController < ApplicationController
         raffle_winner: @pool.raffle_winner,
         isStarted: @pool.isStarted,
         isFinished: @pool.isFinished,
+        isPublic: pool.isPublic,
         prize: @pool.prize,
         user_id: @pool.user_id,
         created_at: @pool.created_at,
@@ -259,7 +260,7 @@ class PoolsController < ApplicationController
     end
 
     def pool_params
-      params.require(:pool).permit(:title, :description, :raffle_winner, :isStarted, :isFinished, :prize, match_ids: [])
+      params.require(:pool).permit(:title, :description, :raffle_winner, :isStarted, :isFinished, :isPublic, :prize, match_ids: [])
     end
 
     def authorize_pool_creation
