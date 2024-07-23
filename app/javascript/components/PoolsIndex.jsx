@@ -12,14 +12,15 @@ const PoolsIndex = ({ pools, notice, userSignedIn, currentUser, csrfToken }) => 
         <h1 className="title">Quinielas</h1>
         
         <div id="pools" className="pools-list">
-          {pools.map(pool => (
-            <div key={pool.id} className="pool-item">
-              <p><strong>Nombre:</strong> {pool.title}</p>
-              <p><strong>Descripción:</strong> {pool.description}</p>
-              <p><strong>Premio:</strong> {pool.prize}</p>
-              <button className="main-button" onClick={() => window.location.href = `/pools/${pool.id}`}>Ver Quiniela</button>
-              {/* <p><a href={`/pools/${pool.id}`} className="view-pool-link">Ver Quiniela</a></p> */}
-            </div>
+          {pools
+            .filter(pool => pool.isPublic && !pool.isFinished)
+            .map(pool => (
+              <div key={pool.id} className="pool-item">
+                <p><strong>Nombre:</strong> {pool.title}</p>
+                <p><strong>Descripción:</strong> {pool.description}</p>
+                <p><strong>Premio:</strong> {pool.prize}</p>
+                <button className="main-button" onClick={() => window.location.href = `/pools/${pool.id}`}>Ver Quiniela</button>
+              </div>
           ))}
         </div>
 
