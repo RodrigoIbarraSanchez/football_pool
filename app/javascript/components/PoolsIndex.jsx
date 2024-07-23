@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from './Navbar'; // Ajusta la ruta según sea necesario
 import '../stylesheets/PoolsIndex.css';
 
 const PoolsIndex = ({ pools, notice, userSignedIn, currentUser, csrfToken }) => {
+  useEffect(() => {
+    console.log('All Pools:', pools);
+    const filteredPools = pools.filter(pool => pool.isPublic && !pool.isFinished);
+    console.log('Filtered Pools:', filteredPools);
+  }, [pools]);
   return (
     <>
       <Navbar userSignedIn={userSignedIn} csrfToken={csrfToken} />
