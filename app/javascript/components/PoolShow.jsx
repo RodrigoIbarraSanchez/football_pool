@@ -52,7 +52,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
   // Formato de fecha y hora para mejor UX
   const formatDateTime = (dateTime) => {
     const date = new Date(dateTime);
-    const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    const options = { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
     return date.toLocaleDateString(undefined, options);
   };
 
