@@ -32,7 +32,7 @@ class PredictionsController < ApplicationController
   def update
     prediction = Prediction.find(params[:id])
     match = prediction.match
-    if match.status != "NS"
+    if match.status != "NS" || match.status != "TBD"
       flash[:alert] = "No se pueden actualizar las predicciones para partidos que ya han comenzado."
       redirect_to pool_path(prediction.pool_id), alert: "No se pueden actualizar las predicciones para partidos que ya han comenzado."
       return
