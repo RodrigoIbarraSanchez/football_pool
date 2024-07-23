@@ -217,7 +217,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
                       </div>
                     </div>
                     <span className={(match.status === '1H' || match.status === '2H') ? 'elapsed-status-live' : 'elapsed-status'}>{
-                      match.status === 'NS' ? formatTime(match.date) : match.status === 'FT' ? 'FT' : `${match.elapsed}`
+                      displayMatchInfo(match)
                     } </span>
                   </li>
                 ))}
