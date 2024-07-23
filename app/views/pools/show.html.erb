@@ -46,7 +46,7 @@
   userIsParticipant: @user_is_participant || false,
   currentUser: current_user ? {
     id: current_user.id,
-    predictions: current_user.predictions.where(pool_id == @pool.id).map { |prediction| {
+    predictions: current_user.predictions.where(pool_id: @pool.id).map { |prediction| {
       id: prediction.id,
       match_id: prediction.match_id, 
       home_team_score: prediction.home_team_score, 
