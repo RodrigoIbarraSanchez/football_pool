@@ -182,6 +182,7 @@ class PoolsController < ApplicationController
     @pool = Pool.find(params[:id])
     @participants = @pool.users.select("users.*, SUM(predictions.points) AS total_points")
                               .joins(:predictions)
+                              .where(predictions: { pool_id: @pool.id })
                               .group("users.id")
                               .order("total_points DESC")
 
@@ -209,8 +210,7 @@ class PoolsController < ApplicationController
                   match_id: prediction.match_id,
                   home_team_score: prediction.home_team_score,
                   away_team_score: prediction.away_team_score,
-                  points: prediction.points,
-                  pool_id: prediction.pool_id
+                  points: prediction.points
                 }
               end
             }
@@ -242,8 +242,7 @@ class PoolsController < ApplicationController
                   match_id: prediction.match_id,
                   home_team_score: prediction.home_team_score,
                   away_team_score: prediction.away_team_score,
-                  points: prediction.points,
-                  pool_id: prediction.pool_id
+                  points: prediction.points
                 }
               end
             }
