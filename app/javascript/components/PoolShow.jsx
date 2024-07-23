@@ -170,8 +170,8 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
                                 -
                                 <input type="number" name="prediction[away_team_score][]" className="score-input" />
                                 <div className="team">
-                                  <img src={match.away_team_logo} alt={match.away_team} className="team-logo" />
                                   <span className={`team-name ${isLongName(match.away_team) ? 'long-name' : ''}`}>{match.away_team}</span>
+                                  <img src={match.away_team_logo} alt={match.away_team} className="team-logo" />
                                 </div>
                               </div>
                               <input type="hidden" name="prediction[match_id][]" value={match.id} />
