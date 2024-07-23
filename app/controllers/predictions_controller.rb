@@ -7,7 +7,7 @@ class PredictionsController < ApplicationController
     ActiveRecord::Base.transaction do
       prediction_params[:match_id].each_with_index do |match_id, index|
         match = Match.find(match_id)
-        if match.status != "NS"
+        if match.status != "NS" || match.status != "TBD"
           flash[:alert] = "No se pueden crear predicciones para partidos que ya han comenzado."
           raise ActiveRecord::RecordInvalid.new(Prediction.new), "No se pueden crear predicciones para partidos que ya han comenzado."
         end
