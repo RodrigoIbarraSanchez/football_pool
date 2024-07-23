@@ -307,8 +307,7 @@ class PoolsController < ApplicationController
       to = from + 7.days
       league = params[:league_id] || 772  # Obtener el ID de la liga de los parámetros de la URL
     
-      # Eliminar partidos antiguos de la liga especificada
-      Match.where(league_id: league).where('date < ?', from).destroy_all
+      safe_delete_old_matches(league, from) # Llamar a la función para limpiar partidos antiguos
     
       api_service = ApiFootballService.new
       response = api_service.save_fixtures(season, from, to, league)
@@ -342,7 +341,17 @@ class PoolsController < ApplicationController
       end
     
       logger.debug "Exiting save_current_round_matches"
-    end           
+    end    
+    
+    def safe_delete_old_matches(league, from)
+      old_matches = Match.where(league_id: league).where('date < ?', from)
+      old_matches.each do |match|
+        unless match.pools.exists?
+          match.predictions.destroy_all
+          match.destroy
+        end
+      end
+    end    
 
     def load_matches
       @matches = Match.all
