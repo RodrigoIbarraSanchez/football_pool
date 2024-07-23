@@ -10,7 +10,7 @@ class MatchesController < ApplicationController
     season = 2024
     from = Date.today
     to = from + (7 - from.wday) # Obtener el próximo domingo
-    league = 262
+    league = 772
     response = service.fixtures(season, from, to, league)
 
     # Verificar que la respuesta contenga datos

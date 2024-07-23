@@ -16,8 +16,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :predictions, dependent: :destroy
-  has_and_belongs_to_many :pools, join_table: :pools_users, dependent: :destroy
   has_many :created_pools, class_name: 'Pool', foreign_key: 'user_id', dependent: :destroy
+  has_many :first_place_pools, class_name: 'Pool', foreign_key: 'first_place_winner_id'
+  has_many :second_place_pools, class_name: 'Pool', foreign_key: 'second_place_winner_id'
+  has_many :third_place_pools, class_name: 'Pool', foreign_key: 'third_place_winner_id'
+  has_and_belongs_to_many :pools, join_table: :pools_users, dependent: :destroy
   has_one_attached :profile_picture
 
   enum role: { regular: 'regular', admin: 'admin' }

@@ -15,6 +15,9 @@
 #
 class Pool < ApplicationRecord
   belongs_to :user
+  belongs_to :first_place_winner, class_name: 'User', optional: true
+  belongs_to :second_place_winner, class_name: 'User', optional: true
+  belongs_to :third_place_winner, class_name: 'User', optional: true
   has_and_belongs_to_many :matches
   has_and_belongs_to_many :users, join_table: :pools_users
   has_many :predictions, dependent: :destroy

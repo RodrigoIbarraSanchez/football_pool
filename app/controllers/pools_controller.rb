@@ -274,7 +274,7 @@ class PoolsController < ApplicationController
       today = Date.today
       start_of_week = today.beginning_of_week(:monday)
       end_of_week = today.end_of_week(:sunday)
-      league = 262
+      league = 772
       
       logger.debug "Fetching fixtures from #{start_of_week} to #{end_of_week} for league #{league}"
       
@@ -304,7 +304,7 @@ class PoolsController < ApplicationController
       season = 2024
       from = Date.today
       to = from + 7.days
-      league = 262
+      league = 772
     
       api_service = ApiFootballService.new
       response = api_service.save_fixtures(season, from, to, league)
