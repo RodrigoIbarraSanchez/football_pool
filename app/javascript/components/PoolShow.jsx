@@ -142,7 +142,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
                             )}
                           </div>
                         </div>
-                        {match.status === 'NS' && match.status === 'TBD' && (
+                        {match.status === 'NS' || match.status === 'TBD' && (
                           <button className="edit-button" onClick={() => handleEditClick({ ...prediction, match })}>Editar</button>
                         )}
                       </li>
