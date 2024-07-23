@@ -72,7 +72,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
         {location.pathname === `/pools/${pool.id}` && (
           <>
             {!userIsParticipant && (
-              <button className="join-button" onClick={() => window.location.href = `/pools/${pool.id}/join`} disabled={pool.isStarted || pool.isFinished}>Join this pool</button>
+              <button className="main-button" onClick={() => window.location.href = `/pools/${pool.id}/join`} disabled={pool.isStarted || pool.isFinished}>Participar</button>
             )}
 
             {userIsParticipant && (

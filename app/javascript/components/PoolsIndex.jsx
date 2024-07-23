@@ -17,7 +17,8 @@ const PoolsIndex = ({ pools, notice, userSignedIn, currentUser, csrfToken }) => 
               <p><strong>Nombre:</strong> {pool.title}</p>
               <p><strong>Descripción:</strong> {pool.description}</p>
               <p><strong>Premio:</strong> {pool.prize}</p>
-              <p><a href={`/pools/${pool.id}`} className="view-pool-link">Ver Quiniela</a></p>
+              <button className="main-button" onClick={() => window.location.href = `/pools/${pool.id}`}>Ver Quiniela</button>
+              {/* <p><a href={`/pools/${pool.id}`} className="view-pool-link">Ver Quiniela</a></p> */}
             </div>
           ))}
         </div>
