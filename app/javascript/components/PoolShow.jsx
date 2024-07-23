@@ -50,11 +50,20 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
     .sort(compareMatchesByDate); // Ordenar por fecha
 
   // Formato de fecha y hora para mejor UX
-  const formatTime = (dateString) => {
-    const date = new Date(dateString);
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    return `${hours}:${minutes}`;
+  const formatDateTime = (dateTime) => {
+    const date = new Date(dateTime);
+    const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    return date.toLocaleDateString(undefined, options);
+  };
+
+  const displayMatchInfo = (match) => {
+    if (match.status === 'NS' || match.status === 'TBD') {
+      return formatDateTime(match.date);
+    } else if (match.status === 'FT') {
+      return 'FT';
+    } else {
+      return `${match.elapsed}'`;
+    }
   };
 
   return (
@@ -126,7 +135,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
                           </div>
                         </div>
                         <span className={(match.status === '1H' || match.status === '2H') ? 'elapsed-status-live' : 'elapsed-status'}>{
-                          match.status === 'NS' ? formatTime(match.date) : match.status === 'FT' ? 'FT' : `${match.elapsed}'`
+                          displayMatchInfo(match)
                         } </span>
                         <div className="prediction-container" onClick={() => openModal(match)}  >
                           <div className="prediction-details">
