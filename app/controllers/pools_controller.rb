@@ -181,8 +181,8 @@ class PoolsController < ApplicationController
   def leaderboard
     @pool = Pool.find(params[:id])
     @participants = @pool.users.select("users.*, SUM(predictions.points) AS total_points")
-                              .joins(:predictions)
-                              .where(predictions: { pool_id: @pool.id })
+                              .left_joins(:predictions)
+                              .where("predictions.pool_id IS NULL OR predictions.pool_id = ?", @pool.id)
                               .group("users.id")
                               .order("total_points DESC")
 
