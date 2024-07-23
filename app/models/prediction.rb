@@ -11,7 +11,7 @@ class Prediction < ApplicationRecord
 
   def match_not_started
     return if user.admin?
-    if match.status != "NS" || match.status != "TBD"
+    if match.status != "NS" && match.status != "TBD"
       errors.add(:base, "No se pueden guardar predicciones para partidos que ya han comenzado.")
     end
   end
