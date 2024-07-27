@@ -66,6 +66,9 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
     }
   };
 
+  console.log('pool.isStarted:', pool.isStarted);
+  console.log('pool.isFinished:', pool.isFinished);
+
   return (
     <>
       <Navbar userSignedIn={userSignedIn} csrfToken={csrfToken} />
