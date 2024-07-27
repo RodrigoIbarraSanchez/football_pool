@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :pools do
     member do
       match 'join', via: [:get, :post]
-      get 'leaderboard'
+      get 'leaderboard', to: 'pools#leaderboard'
     end
   end
 
