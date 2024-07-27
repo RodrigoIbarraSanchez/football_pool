@@ -30,6 +30,7 @@ const Leaderboard = ({ pool, userSignedIn, csrfToken }) => {
   if (!participants || participants.length === 0) return <div>No participants data</div>;
 
   const sortedParticipants = participants.sort((a, b) => b.total_points - a.total_points);
+  console.log(sortedParticipants);
 
   const getRankEmoji = (rank) => {
     switch (rank) {
