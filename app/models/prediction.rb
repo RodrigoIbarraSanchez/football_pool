@@ -6,6 +6,7 @@ class Prediction < ApplicationRecord
   before_save :calculate_points, unless: :skip_validation
 
   validate :match_not_started, on: [:create, :update], unless: :skip_validation
+  validate :user_id, uniqueness: { scope: [:match_id, :pool_id], message: "Ya has hecho una predicción para este partido.", on: :create }
 
   attr_accessor :skip_validation
 
