@@ -146,7 +146,7 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
                         <div className="prediction-container" onClick={() => openModal(match)}  >
                           <div className="prediction-details">
                             <span className={(match.status === 'FT' ? 'detail-score-ft': 'detail-score')}>{prediction ? prediction.home_team_score : '-'} - {prediction ? prediction.away_team_score : '-'}</span>
-                            {match.status === 'FT' && prediction && (
+                            {match.status === 'FT' || match.status === 'PEN' && prediction && (
                               <span className={
                                 prediction.points === 5 
                                   ? 'detail-points-5' 
