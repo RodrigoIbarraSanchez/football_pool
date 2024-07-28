@@ -61,6 +61,8 @@ const PoolShow = ({ pool, userIsCreator, userIsParticipant, userSignedIn, notice
       return formatDateTime(match.date);
     } else if (match.status === 'FT') {
       return 'FT';
+    } else if (match.status === 'PEN') {
+      return 'PEN';
     } else {
       return `${match.elapsed}'`;
     }
