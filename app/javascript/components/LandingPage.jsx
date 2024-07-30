@@ -13,7 +13,7 @@ const LandingPage = ({ userSignedIn }) => {
         <div className="hero-content">
           <h1>Quinielas de Futbol cada semana</h1>
           <p>Entrada: $100 MXN - Bolsa Asegurada: $1,000 MXN</p>
-          <p>Pocos Particippantes (Menos de 20).</p>
+          <p>Pocos Participantes (Menos de 20).</p>
           <p>Mejores premios y costos más bajos cada semana con más participantes.</p>
           <p>¡Regístrate y comienza a jugar!</p>
           {userSignedIn ? (
