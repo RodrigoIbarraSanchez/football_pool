@@ -1,0 +1,226 @@
+.landing-page {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+.hero-section {
+  /* background-image: url('../../assets/images/landing-bg.jpg'); */
+  background-size: cover;
+  background-position: center;
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: rgb(74, 74, 74);
+}
+
+.hero-content {
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #383838;
+  color: white;
+  z-index: 2;
+}
+
+.hero-content h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 14px;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.cta-buttons button {
+  background: linear-gradient(90deg, #00a6ff, #6c09ee);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+  width: 50%;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.cta-buttons button:hover {
+  background-color: #ff4500;
+}
+
+.telegram-btn {
+  background: #007fff;
+  border-radius: 10px;
+  padding: 10px;
+  width: 200px;
+  color: white;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.benefits-section,
+.testimonials-section {
+  padding: 4rem 2rem;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.benefits,
+.testimonials {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 2rem;
+}
+
+.ss-image1 {
+  width: 200px;
+  position: fixed;
+  top: 0px;
+  left: 150px;
+  z-index: 1;
+  transform: rotate(345deg);
+}
+
+.ss-image2 {
+  width: 200px;
+  position: fixed;
+  top: 200px;
+  right: 100px;
+  z-index: 1;
+  transform: rotate(25deg);
+}
+
+.benefit,
+.testimonial {
+  flex: 1 1 30%;
+  background: #fffffff0;
+  padding: 2rem;
+  margin: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.benefit,
+.raffle {
+  flex: 1 1 30%;
+  background: transparent;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+.benefit, .raffle img {
+  width: 400px;
+  margin: 0 auto;
+  z-index: 0;
+  border-radius: 10px;
+}
+
+.benefit h3,
+.testimonial p {
+  margin-bottom: 1rem;
+}
+
+.benefit p {
+  font-size: 1rem;
+}
+
+.testimonial p {
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+h2 {
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+.hero-content {
+    border-radius: 0;
+    margin-top: -160px;
+  }
+
+  .ss-image1 {
+    width: 150px;
+    left: 10px;
+    top: 300px;
+  }
+
+  .ss-image2 {
+    width: 150px;
+    right: 10px;
+    top: 500px;
+  }
+
+  .benefits-section, .testimonials-section {
+    margin-top: -215px;
+  }
+  
+  .mobile-title {
+    margin-top: -120px!important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content {
+    padding: 1rem;
+    margin-top: -90px;
+  }
+
+  .hero-content h1 {
+    font-size: 32px;
+  }
+
+  .benefits-section, .testimonials-section {
+    margin-top: -150px;
+  }
+
+  .benefit, .testimonial {
+    flex: 1 1 100%;
+  }
+
+  .ss-image1 {
+    width: 100px;
+    left: 10px;
+    top: 380px;
+  }
+
+  .ss-image2 {
+    width: 100px;
+    right: 10px;
+    top: 600px;
+  }
+
+  .benefit,
+  .raffle {
+    flex: 1 1 100%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    z-index: 2;
+  }
+
+  .benefit, .raffle img {
+    width: 200px;
+    margin: 0 auto;
+    z-index: 0;
+    border-radius: 10px;
+  }
+}

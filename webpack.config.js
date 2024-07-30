@@ -18,7 +18,23 @@ const customConfig = {
           loader: 'babel-loader',
         },
       },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path][name].[ext]',
+            },
+          },
+        ],
+      },
     ],
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'app/javascript'), // Ajusta esto según tu estructura de proyecto
+    },
   },
 };
 

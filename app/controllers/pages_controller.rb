@@ -25,4 +25,11 @@ class PagesController < ApplicationController
 
     @props = props
   end
+
+  def landing
+    @props = {
+      userSignedIn: user_signed_in?,
+      currentUser: current_user
+    }
+  end
 end

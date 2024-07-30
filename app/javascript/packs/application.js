@@ -6,6 +6,7 @@ import PoolShow from '../components/PoolShow';
 import Leaderboard from '../components/Leaderboard';
 import UserProfile from '../components/UserProfile';
 import UserEditProfile from '../components/UserEditProfile';
+import LandingPage from '../components/LandingPage';
 
 document.addEventListener('DOMContentLoaded', () => {
   const rootElement = document.getElementById('react-root');
@@ -17,11 +18,16 @@ document.addEventListener('DOMContentLoaded', () => {
     root.render(
       <Router>
         <Routes>
-          <Route path="/pools/:id" element={<PoolShow {...props} userSignedIn={props.userSignedIn} />} />
-          <Route path="/pools/:id/leaderboard" element={<Leaderboard pool={props.pool} userSignedIn={props.userSignedIn} />} />
-          <Route path="/" element={<PoolsIndex {...props} />} />
-          <Route path='/profile' element={<UserProfile user={props.currentUser} userSignedIn={props.userSignedIn} />} />
-          <Route path="/profile/edit" element={<UserEditProfile user={props.currentUser} csrfToken={props.csrfToken} userSignedIn={props.userSignedIn} />} />
+          <Route path="/" element={<LandingPage userSignedIn={props.userSignedIn} />} />
+          {props.userSignedIn && (
+            <>
+              <Route path="/pools" element={<PoolsIndex {...props} />} />
+              <Route path="/pools/:id" element={<PoolShow {...props} />} />
+              <Route path="/pools/:id/leaderboard" element={<Leaderboard pool={props.pool} {...props} />} />
+              <Route path='/profile' element={<UserProfile user={props.currentUser} {...props} />} />
+              <Route path="/profile/edit" element={<UserEditProfile user={props.currentUser} csrfToken={props.csrfToken} {...props} />} />
+            </>
+          )}
         </Routes>
       </Router>
     );

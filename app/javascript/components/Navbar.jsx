@@ -7,13 +7,17 @@ const Navbar = ({ userSignedIn, csrfToken }) => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <a href="/">🏟️ Futbol Desde el Palco</a>
+        {userSignedIn ? (
+          <Link to="/pools">🏟️ Futbol Desde el Palco</Link>
+        ) : (
+          <Link to="/">🏟️ Futbol Desde el Palco</Link>
+        )}
       </div>
       <button className="navbar-toggler" onClick={() => document.getElementById('navbarMenu').classList.toggle('is-active')}>&#9776;</button>
       <div className="navbar-menu" id="navbarMenu">
-        <a href="/">Quinielas</a>
-        {userSignedIn && <a href="/profile">Perfil</a>}
-        {/* <a href="#">Contact</a> */}
+        <Link to="/">Quinielas</Link>
+        {userSignedIn && <Link to="/profile">Perfil</Link>}
+        {/* <Link to="#">Contact</Link> */}
         {userSignedIn ? (
           <form action="/users/sign_out" method="post" className="logout-form">
             <input type="hidden" name="_method" value="delete" />
@@ -22,8 +26,8 @@ const Navbar = ({ userSignedIn, csrfToken }) => {
           </form>
         ) : (
           <>
-            <a href="/users/sign_in">Iniciar Sesión</a>
-            <a href="/users/sign_up">Registrarse</a>
+            <Link to="/users/sign_in">Iniciar Sesión</Link>
+            <Link to="/users/sign_up">Registrarse</Link>
           </>
         )}
       </div>
