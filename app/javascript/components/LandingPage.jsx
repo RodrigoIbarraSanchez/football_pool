@@ -88,14 +88,20 @@ const LandingPage = ({ userSignedIn }) => {
           <h1>¡Tu primer quiniela es 100% GRATIS! 🎁</h1>
           <p>¡Regístrate y comienza a jugar!</p>
           {userSignedIn ? (
-            <div className="cta-buttons">
-              <button onClick={() => window.location.href = '/pools'}>Ver Quinielas</button>
-            </div>
+            <>
+              <div className="cta-buttons">
+                <button onClick={() => window.location.href = '/pools'}>Ver Quinielas</button>
+              </div>
+              <button className='telegram-btn' onClick={() => window.open('https://t.me/futboldesdeelpalco/1', '_blank')}>Unirme a la comunidad en Telegram</button>
+            </>
           ) : (
-            <div className="cta-buttons">
-              <button onClick={() => window.location.href = '/users/sign_in'}>Iniciar Sesión</button>
-              <button onClick={() => window.location.href = '/users/sign_up'}>Registrarme</button>
-            </div>
+            <>
+              <div className="cta-buttons">
+                <button onClick={() => window.location.href = '/users/sign_in'}>Iniciar Sesión</button>
+                <button onClick={() => window.location.href = '/users/sign_up'}>Registrarme</button>
+              </div>
+              <button className='telegram-btn' onClick={() => window.open('https://t.me/futboldesdeelpalco/1', '_blank')}>Unirme a la comunidad en Telegram</button>
+            </>
           )}
         </div>
         <img src={ssImage1} alt="Quiniela en iPhone" className="ss-image1"/>
