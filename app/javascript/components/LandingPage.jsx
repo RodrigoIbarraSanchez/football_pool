@@ -37,7 +37,7 @@ const LandingPage = ({ userSignedIn }) => {
           <div className="benefit">
             <h3>1. Enviar comprobante de pago en Telegram</h3>
             <p>Tenemos una comunidad en Telegram donde estamos solamente fanáticos del futbol, ahí tenemos un canal llamado "Registro de Quinielas" donde los participantes envían su captura de pago.</p>
-            <button className='telegram-btn' onClick={() => window.open('https://t.me/futboldesdeelpalco/1', '_blank')}>Unirme a la comunidad en Telegram</button>
+            <button className='telegram-btn' onClick={() => window.open('https://t.me/futboldesdeelpalco/1', '_blank')}>Unirme en Telegram</button>
           </div>
           <div className="benefit">
             <h3>2. Llenas tu Quiniela</h3>
@@ -92,7 +92,7 @@ const LandingPage = ({ userSignedIn }) => {
               <div className="cta-buttons">
                 <button onClick={() => window.location.href = '/pools'}>Ver Quinielas</button>
               </div>
-              <button className='telegram-btn' onClick={() => window.open('https://t.me/futboldesdeelpalco/1', '_blank')}>Unirme a la comunidad en Telegram</button>
+              <button style={{marginTop: '10px'}} className='telegram-btn' onClick={() => window.open('https://t.me/futboldesdeelpalco/1', '_blank')}>Unirme en Telegram</button>
             </>
           ) : (
             <>
@@ -100,7 +100,7 @@ const LandingPage = ({ userSignedIn }) => {
                 <button onClick={() => window.location.href = '/users/sign_in'}>Iniciar Sesión</button>
                 <button onClick={() => window.location.href = '/users/sign_up'}>Registrarme</button>
               </div>
-              <button className='telegram-btn' onClick={() => window.open('https://t.me/futboldesdeelpalco/1', '_blank')}>Unirme a la comunidad en Telegram</button>
+              <button style={{marginTop: '10px'}} className='telegram-btn' onClick={() => window.open('https://t.me/futboldesdeelpalco/1', '_blank')}>Unirme en Telegram</button>
             </>
           )}
         </div>
