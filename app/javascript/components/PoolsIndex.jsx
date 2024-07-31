@@ -3,11 +3,11 @@ import Navbar from './Navbar'; // Ajusta la ruta según sea necesario
 import '../stylesheets/PoolsIndex.css';
 
 const PoolsIndex = ({ pools, notice, userSignedIn, currentUser, csrfToken }) => {
-  useEffect(() => {
-    console.log('All Pools:', pools);
-    const filteredPools = pools.filter(pool => pool.isPublic && !pool.isFinished);
-    console.log('Filtered Pools:', filteredPools);
-  }, [pools]);
+  const filteredPools = pools.filter(pool => pool.isPublic && !pool.isFinished);
+
+  console.log('All Pools:', pools);
+  console.log('Filtered Pools:', filteredPools);
+  
   return (
     <>
       <Navbar userSignedIn={userSignedIn} csrfToken={csrfToken} />
