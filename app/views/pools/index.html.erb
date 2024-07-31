@@ -1,5 +1,5 @@
 <% props = {
-  pools: @pools.map { |pool| { id: pool.id, title: pool.title, description: pool.description, user_id: pool.user_id, prize: pool.prize, created_at: pool.created_at, updated_at: pool.updated_at } },
+  pools: @pools.map { |pool| { id: pool.id, title: pool.title, description: pool.description, user_id: pool.user_id, prize: pool.prize, created_at: pool.created_at, updated_at: pool.updated_at, isPublic: pool.isPublic, isFinished: pool.isFinished } },
   notice: notice,
   userSignedIn: user_signed_in?,
   currentUser: current_user ? { id: current_user.id, admin: current_user.admin? } : nil,
