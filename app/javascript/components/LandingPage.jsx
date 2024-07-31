@@ -21,10 +21,13 @@ const LandingPage = ({ userSignedIn }) => {
               <button onClick={() => window.location.href = '/pools'}>Ver Quinielas</button>
             </div>
           ) : (
-            <div className="cta-buttons">
-              <button onClick={() => window.location.href = '/users/sign_in'}>Iniciar Sesión</button>
-              <button onClick={() => window.location.href = '/users/sign_up'}>Registrarme</button>
-            </div>
+            <>
+              <div className="cta-buttons">
+                <button onClick={() => window.location.href = '/users/sign_up'}>Registrarme</button>
+                <button onClick={() => window.location.href = '/users/sign_in'}>Iniciar Sesión</button>
+              </div>
+              <button style={{marginTop: '10px'}} className='telegram-btn' onClick={() => window.open('https://t.me/futboldesdeelpalco/3658', '_blank')}>Tengo Dudas</button>
+            </>
           )}
         </div>
         <img src={ssImage1} alt="Quiniela en iPhone" className="ss-image1"/>
@@ -92,7 +95,7 @@ const LandingPage = ({ userSignedIn }) => {
               <div className="cta-buttons">
                 <button onClick={() => window.location.href = '/pools'}>Ver Quinielas</button>
               </div>
-              <button style={{marginTop: '10px'}} className='telegram-btn' onClick={() => window.open('https://t.me/futboldesdeelpalco/1', '_blank')}>Unirme en Telegram</button>
+              <button style={{marginTop: '10px'}} className='telegram-btn' onClick={() => window.open('https://t.me/futboldesdeelpalco/3658', '_blank')}>Tengo Dudas</button>
             </>
           ) : (
             <>
@@ -100,7 +103,7 @@ const LandingPage = ({ userSignedIn }) => {
                 <button onClick={() => window.location.href = '/users/sign_in'}>Iniciar Sesión</button>
                 <button onClick={() => window.location.href = '/users/sign_up'}>Registrarme</button>
               </div>
-              <button style={{marginTop: '10px'}} className='telegram-btn' onClick={() => window.open('https://t.me/futboldesdeelpalco/1', '_blank')}>Unirme en Telegram</button>
+              <button style={{marginTop: '10px'}} className='telegram-btn' onClick={() => window.open('https://t.me/futboldesdeelpalco/3658', '_blank')}>Tengo Dudas</button>
             </>
           )}
         </div>

@@ -11,7 +11,7 @@ body {
 }
 
 .logout-link, .login-link, .signup-link {
-  background-color: #007bff;
+  background-color: #59ffc7;
   color: white;
   border: none;
   border-radius: 4px;
@@ -51,6 +51,75 @@ body {
   text-align: center;
 }
 
+.steps-title {
+  color: #2e2e2e;
+  margin: 0;
+  padding: 10px;
+  background: #59ffc7;
+}
+
+.steps-box {
+  background-color: #2e2e2e;
+  color: white;
+  padding: 10px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.telegram-btn-steps {
+  background: #007fff;
+  border-radius: 10px;
+  padding: 10px 5px;
+  width: 320px;
+  color: white;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  margin-left: 5px;
+  margin-top: -7px;
+}
+
+.steps-box h3 {
+  margin: 0;
+}
+
+.steps-box p {
+  margin: 5px 5px;
+}
+
+.steps-box .step {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  height: 40px;
+}
+
+.steps-box .step h2 {
+  color: white;
+}
+
+.steps-box .step .step-number {
+  background-color: #59ffc7;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.steps-box .step .step-content {
+  margin-left: 10px;
+}
+
+.steps-box .step .step-content p {
+  margin: 0;
+}
+
 .pools-list {
   list-style: none;
   padding: 0;
@@ -84,7 +153,7 @@ body {
 }
 
 .view-pool-link {
-  color: #007bff;
+  color: #59ffc7;
   text-decoration: none;
 }
 
@@ -98,7 +167,7 @@ body {
 }
 
 .creator-actions .new-pool-link {
-  color: #007bff;
+  color: #59ffc7;
   text-decoration: none;
 }
 

@@ -7,7 +7,7 @@
 .navigation a {
   margin: 0 15px;
   text-decoration: none;
-  color: #007bff;
+  color: #59ffc7;
   font-weight: bold;
 }
 
@@ -90,7 +90,7 @@ body {
 
 .auth-container .field label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: -15px;
   color: #555;
 }
 
@@ -102,6 +102,7 @@ body {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
+  margin-left: -10px;
 }
 
 .auth-container .actions {
@@ -125,7 +126,7 @@ body {
   display: block;
   text-align: center;
   margin-top: 10px;
-  color: #007bff;
+  color: #59ffc7;
   text-decoration: none;
 }
 
