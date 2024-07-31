@@ -33,9 +33,7 @@ const PoolsIndex = ({ pools, notice, userSignedIn, currentUser, csrfToken }) => 
         <h1 className="title">Quinielas</h1>
         
         <div id="pools" className="pools-list">
-          {pools
-            .filter(pool => pool.isPublic && !pool.isFinished)
-            .map(pool => (
+          {filteredPools.map(pool => (
               <div key={pool.id} className="pool-item">
                 <p><strong>Nombre:</strong> {pool.title}</p>
                 <p><strong>Descripción:</strong> {pool.description}</p>
